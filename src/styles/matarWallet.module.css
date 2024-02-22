@@ -1,0 +1,30 @@
+.heading{
+  font-family: "Russo One";
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+}
+
+.description{
+  font-family: "Manjari";
+  font-size: 16px;
+  color: #9A9FB9;
+  text-align: center;
+}
+
+.stats{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (min-width: 768px){
+  .heading{
+    font-size: 38px;
+    text-align: start;
+  }
+  .description{
+    font-size: 12px;
+    text-align: start;
+  }
+}

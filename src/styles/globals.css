@@ -1,0 +1,256 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;800&family=Russo+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  z-index: 0;
+}
+
+a {
+  color: #84309c;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: #e7e8e8;
+  background: #070707;
+}
+
+.header-first {
+  color: #fff;
+  font-family: "Russo One";
+  font-size: 70px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.header-para {
+  color: #fff;
+  font-family: Manjari;
+  font-size: 1.5625rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5625rem;
+  /* 100% */
+  max-width: 850px;
+}
+
+.mt-40 {
+  margin-top: 7rem;
+}
+
+.pt-50 {
+  padding-top: 50px;
+}
+.pb-50{
+  padding-bottom: 50px;
+}
+
+/* @media (min-width: 1400px) {
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1600px;
+  }
+} */
+.form-control {
+  background-color: #052853;
+  border: 1px solid #12b7f2;
+  color: #fff;
+}
+
+.form-control:focus {
+  background-color: #052853;
+  color: #fff;
+  border-color: #12b7f2;
+}
+
+.form-control::placeholder {
+  color: #a2a2a2;
+}
+
+.title {
+  font-family: "Plus Jakarta Sans";
+  color: #12b7f2;
+  font-size: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.heading {
+  font-family: "Russo One";
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+}
+
+.rectangle {
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 3px solid #fff;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 183, 242, 0) 0%,
+    rgba(19, 79, 171, 0.25) 100%
+  );
+  box-shadow: 0px 2px 20px 4px #12b7f2;
+}
+
+.presale-header {
+  color: #fff;
+  text-align: center;
+  font-family: "Russo One";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  /* max-width: 275px; */
+}
+
+.navbar-toggler-icon {
+  background-image: url("../assets/hamburgerIcon.svg");
+}
+
+.rectangle-box {
+  border-radius: 5px;
+  background: rgba(18, 183, 242, 0.5);
+}
+
+.manage {
+  display: flex;
+  border-radius: 5px;
+  width: 508px;
+  background: rgba(18, 183, 242, 0.5);
+}
+
+.header-text {
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media (min-width: 768px) {
+  .px-md-10 {
+    padding-right: 10rem !important;
+    padding-left: 10rem !important;
+  }
+  .mt-md-10 {
+      margin-top: 10rem!important;
+  }
+  .heading {
+    font-family: "Russo One";
+    font-size: 50px;
+    text-align: start;
+  }
+  .title {
+    font-size: 20px;
+    text-align: start;
+  }
+}
+
+.mt-10 {
+  margin-top: 10rem !important;
+}
+
+@media (min-width: 1400px) {
+  .wideContainer {
+    max-width: 1650px !important;
+  }
+}
+
+/* for arabic alignment */
+.directionRTL {
+  direction: rtl;
+}
+
+/* faq css */
+
+.accordion-button::after {
+  display: none;
+}
+
+.accordion-button {
+  background: transparent;
+  color: #fff;
+  border-top: 1px solid #f3f3f3;
+  padding-top: 38px;
+  padding-bottom: 38px;
+  font-size: 21px;
+}
+
+.accordion-body {
+  background: transparent;
+  color: #9a9fb9;
+  font-family: Inter;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent !important;
+  color: #5fb7fb !important;
+}
+
+.accordion-button:focus {
+  z-index: 0;
+  border-color: inherit;
+  outline: 0;
+  box-shadow: none;
+}
+
+.accordion {
+  --bs-accordion-bg: none;
+  --bs-accordion-border-color: none;
+}
+
+.accordion-item:first-of-type .accordion-button {
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.social-icon {
+  border-radius: 5px;
+  background: linear-gradient(180deg, #12b7f2 0%, #134fab 100%);
+}
+
+/* dropDown Style language */
+
+.language-dropdown {
+  background: linear-gradient(180deg, #12b7f2 24%, #134fab 124%) !important;
+  border-radius: 5px;
+  width: fit-content;
+}
+.language-dropdown button{
+  border: none;
+}
+
+.btn-primary {
+  --bs-btn-bg: transparent;
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-active-bg: transparent;
+}
+
+.language-dropdown:hover {
+  background: linear-gradient(180deg, #12b7f2 24%, #134fab 124%) !important;
+  border-radius: 5px !important;
+  width: fit-content; 
+}

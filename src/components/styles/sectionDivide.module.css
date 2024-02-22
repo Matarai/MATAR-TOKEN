@@ -1,0 +1,37 @@
+.box{
+  background: linear-gradient(180deg, #5FB7FB 0%, #1d51b0 100%);
+  padding: 20px 20px;
+  margin: 3rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+
+.textBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 8px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.textBox > img{
+  width: 10px;
+  margin: 0 20px;
+}
+
+@media (min-width: 768px){
+  .textBox{
+    font-size: 50px;
+    font-weight: 800;
+  }
+  
+  .textBox > img{
+    width: 40px;
+    margin: 0 50px;
+  }
+}

@@ -1,0 +1,73 @@
+.box{
+  position: relative;
+  max-width: 300px;
+  height: 500px;
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%);
+  backdrop-filter: blur(12.5px);
+  padding: 15px;
+  z-index: 5;
+}
+
+.id{
+  background: var(--Grad-01, linear-gradient(116deg, #5FB7FB 0%, #1D51B0 100%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Plus Jakarta Sans";
+  font-size: 48px;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.title{
+  font-family: "Russo One";
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.description{
+  font-family: Manjari;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.img{
+  width: 100%;
+  object-fit: cover;
+  padding: 0 35px;
+}
+
+.link{
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 50px;
+}
+
+.cards{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center; 
+  gap: 15px;
+  margin-top: 50px;
+}
+
+.card:nth-child(even){
+  margin-top: 35px;
+}
+.swirl{
+  display: none;
+}
+
+@media (min-width: 768px){
+.swirl{
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+}
+}

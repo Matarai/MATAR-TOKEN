@@ -1,0 +1,45 @@
+.box{
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background: linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%);
+  border-radius: 20px;
+  /* padding: 50px 80px; */
+}
+
+.heading{
+  font-family: "Russo One";
+  font-size: 35px;
+  color: #fff;
+}
+
+.buttons{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.btn{
+  font-family: "Russo One";
+}
+
+.image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.image > img{
+  width: 100%;
+  max-width: 200px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 990px) {
+	.buttons{
+    flex-direction: column;
+  }
+}

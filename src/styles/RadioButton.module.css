@@ -1,0 +1,32 @@
+.label{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.customRadio{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  background: #808797;
+  border-radius: 5px;
+  border: 3px solid #fff;
+}
+
+.value{
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.standard{
+  font-size: 12px;
+}
+
+.label input:checked + .customRadio{
+  background: linear-gradient(180deg, #5FB7FB 0%, #1d51b0 100%);
+}

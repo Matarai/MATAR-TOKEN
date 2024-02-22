@@ -1,0 +1,82 @@
+.description{
+  font-family: "Manjari";
+  font-size: 16px;
+}
+
+.heading{
+  font-family: "Russo One";
+  font-size: 40px;
+  color: #fff;
+}
+
+.key{
+  font-family: "Russo One";
+  font-size: 16px;
+  color: #fff;
+}
+
+.value{
+  font-family: "Manjari";
+  font-size: 16px;
+  color: #9A9FB9;
+}
+
+.feature{
+  display: flex;
+  gap: 20px;
+}
+.featureHeading{
+  font-family: "Russo One";
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.featureDescription{
+  font-family: "Manjari";
+  font-size: 16px;
+  color: #9A9FB9;
+  z-index: 5;
+}
+
+.threadLeft{
+  position: absolute;
+  left: -15px;
+  bottom: 50vh;
+  width: 25%;
+}
+
+.threadRight{
+  position: absolute;
+  top: 0;
+  right: -15px;
+  z-index: 1;
+  opacity: 0.5;
+  width: 25%;
+}
+
+.doughnutBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+.chartBox{
+  display: flex;
+  gap: 20px;
+}
+
+.chartData{
+  margin: 0 5px;
+  font-family: "Russo One";
+  font-size: 10px;
+}
+
+@media (min-width: 768px){
+  .doughnutBox{
+    width: 350px;
+  }
+
+  .chartData{
+    font-size: 16px;
+  }
+}

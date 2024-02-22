@@ -1,0 +1,11 @@
+.description{
+  font-size: 15px;
+  text-align: center;
+}
+
+@media (min-width: 768px){
+  .description{
+    font-size: 25px;
+    text-align: start;
+  }
+}

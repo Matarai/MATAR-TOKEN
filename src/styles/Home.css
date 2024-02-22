@@ -1,0 +1,208 @@
+.main {
+  min-height: 100vh;
+  background-color: #010d2d;
+  overflow: hidden;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+@keyframes fallingBackground {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+@keyframes textShine {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100vw 0;
+  }
+}
+.heroWrapper{
+  background-image: url(../assets/herobg.jpg);
+  background-color: rgba(0, 0, 0, 0.5); /* 50% opacity */
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.hero-content {
+  /* background-image: url(../assets/flare.png); */
+  width: 100%;
+  /* background-blend-mode: color-dodge; */
+  /* background-size: cover; */
+  /* background-position: center; */
+  /* background-repeat: repeat; */
+  /* background-color: #010d2d; */
+  /* animation: fallingBackground 10s linear infinite; */
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+.hero-content h1 {
+  background-image: linear-gradient(
+    116deg,
+    #5eb6fa 0%,
+    #2d68d4 50%,
+    #ffffff 90%,
+    #33b8ff 100%
+  );
+  background-size: 100vw 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: textShine 8s linear infinite;
+}
+.timer-buttons {
+  display: flex;
+  justify-content: center;
+}
+.presaleWrapper input:focus {
+  box-shadow: none;
+}
+.presaleWrapper button {
+  margin-top: 35px;
+  width: 100%;
+}
+
+/* Divider */
+.skew-element {
+  background: #fff;
+  padding: 0;
+  bottom: -7px;
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  z-index: 0;
+  overflow: hidden;
+  transform: skewY(0.5deg);
+}
+
+/* Intro */
+.introductionWrapper {
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+/* Wallet */
+#wallet {
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+/* Tokenomics */
+#tokenomics {
+  padding-top: 150px;
+}
+
+/* FAQs */
+.faqWrapper {
+  padding-top: 225px;
+  padding-bottom: 125px;
+  background-color: #010d2d;
+  font-family: Russo One;
+  max-width: 850px !important;
+}
+
+/* Footer */
+.footerWrapper {
+  background: #181818;
+  background-image: linear-gradient(
+    180deg,
+    #020e2e 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-blend-mode: difference;
+  position: relative;
+  padding-top: 350px;
+  margin-top: 350px;
+}
+.footerCTA {
+  position: absolute;
+  top: -250px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1290px;
+  width: 100%;
+  padding: 100px 0;
+  border-radius: 35px;
+  background-image: url(../assets/footerbg.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: Plus Jakarta Sans;
+}
+.footerCTA h2 {
+  margin-bottom: 160px;
+  font-size: 64px;
+  text-align: center;
+  font-weight: 800;
+}
+.footerCTA .btn {
+  background-image: linear-gradient(116deg, #05b7fb 0%, #1d51b0 100%);
+}
+
+.f-25 {
+  font-size: 25px !important;
+}
+
+/* Modal */
+.comingSoonModal {
+  color: #fff;
+  font-family: Russo One;
+}
+.comingSoonModal .modal-body {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 183, 242, 0) 0%,
+    rgba(19, 79, 171, 0.25) 100%
+  );
+  background-color: #010e2d;
+}
+.modal-backdrop.show {
+  backdrop-filter: blur(10px) !important;
+  opacity: 1 !important;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 768px) {
+  .heroWrapper{
+    background-image: url(../assets/herobg-mobile.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    background-repeat: no-repeat;
+  }
+  .skew-element {
+    bottom: -2px;
+  }
+  .timer-buttons {
+    justify-content: start;
+    margin-top: 0;
+  }
+  .presaleWrapper button {
+    margin-top: 20px;
+  }
+  .saleTimer {
+    width: 100vw !important;
+  }
+  .introductionWrapper {
+    padding-top: 25px;
+    padding-bottom: 30px;
+  }
+  #wallet {
+    padding-top: 25px;
+    padding-bottom: 30px;
+  }
+  #feature {
+    background-image: url(../assets/service-mobile-bg.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

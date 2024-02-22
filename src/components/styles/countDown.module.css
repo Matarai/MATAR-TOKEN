@@ -1,0 +1,39 @@
+.timers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 10px;
+    font-family: 'Russo One';
+    font-size: 1rem;
+    color: #fff;
+}
+
+.timers > span{
+    margin-top: -45px;
+}
+
+.box{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    background-color: transparent;
+    border: 3px solid #12B7F2;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 26px;
+}
+
+.date{
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+}
+
+@media (min-width: 768px){
+
+}
+@media (min-width: 1000px){
+    .timers{
+        justify-content: flex-start;
+    }
+}

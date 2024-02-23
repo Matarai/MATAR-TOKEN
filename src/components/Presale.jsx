@@ -8,19 +8,91 @@ import { Col, Form, Row } from "react-bootstrap";
 import { ButtonFilled } from "./Buttons";
 import matar from "../assets/Icon/matar.svg";
 import bnbYellow from "../assets/Icon/bnb.svg";
+import styles from "./styles/buttons.module.css";
 import { useSelector } from "react-redux";
+import {
+  useContract,
+  useContractRead,
+  Web3Button,
+  useContractWrite,
+} from "@thirdweb-dev/react";
+import { ethers } from "ethers";
 
 function Presale({ presaleData }) {
   const [loaderValue, setLoaderValue] = React.useState(0);
+  const [bnbAmount, setBnbAmount] = React.useState("");
+  const [matarAmount, setMatarAmount] = React.useState("");
   const { currentLanguage } = useSelector((state) => state.login);
 
+  // Read Contract
+  const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  const { data: totalSupply } = useContractRead(contract, "totalSupply");
+  const { contract: presaleContract } = useContract(
+    process.env.REACT_APP_PRESALE_CONTRACT_ADDRESS
+  );
+  const { data: tokenForEachRound } = useContractRead(
+    presaleContract,
+    "tokenForEachRound"
+  );
+  const { data: currentRound } = useContractRead(
+    presaleContract,
+    "currentRound"
+  );
+  const { data: rounds } = useContractRead(presaleContract, "rounds", [
+    currentRound,
+  ]);
+
+  const roundData = rounds?.map((item) => item.toString());
+  const tokenPrice = roundData ? roundData[2] : "0";
+  const tokenSold = roundData ? ethers.utils.formatEther(roundData[3]) : "0";
+  const tokenGoal = roundData ? roundData[4] : "0";
   const data = {
-    totalSupply: "21.000.000",
-    availableForSale: "1.000.000",
+    totalSupply: totalSupply
+      ? parseFloat(ethers.utils.formatEther(totalSupply))
+          .toLocaleString("en-US", {
+            maximumFractionDigits: 0,
+          })
+          .replace(/,/g, ".")
+      : "...",
+    availableForSale: tokenForEachRound
+      ? parseFloat(tokenForEachRound)
+          .toLocaleString("en-US", {
+            maximumFractionDigits: 0,
+          })
+          .replace(/,/g, ".")
+      : "...",
     matar: {
-      price: "21.000",
-      maxPrice: "200.000",
+      price: tokenSold,
+      maxPrice: tokenGoal * tokenPrice,
     },
+  };
+
+  // Write Contract
+  const { mutateAsync: buyTokens, isLoading } = useContractWrite(
+    presaleContract,
+    "buyTokens"
+  );
+  const buyTokensHandler = async () => {
+    try {
+      const data = await buyTokens({
+        value: bnbAmount.toString(),
+      });
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+  const handleBnbAmountChange = (event) => {
+    const enteredAmount = event.target.value;
+    const calculatedMatarAmount = enteredAmount * 141;
+    setBnbAmount(enteredAmount);
+    setMatarAmount(calculatedMatarAmount.toFixed(6));
+  };
+  const handleMATARAmountChange = (event) => {
+    const enteredAmount = event.target.value;
+    const calculatedMatarAmount = enteredAmount / 141;
+    setMatarAmount(enteredAmount);
+    setBnbAmount(calculatedMatarAmount.toFixed(6));
   };
 
   useEffect(() => {
@@ -30,7 +102,9 @@ function Presale({ presaleData }) {
     }, 1000);
     return () => clearInterval(interval);
   });
-
+  // const { contract, isLoading } = useContract(
+  //   process.env.NEXT_PUBLIC_PRESALE_CONTRACT_ADDRESS
+  // );
   return (
     <Container className="presaleWrapper">
       <p
@@ -116,9 +190,12 @@ function Presale({ presaleData }) {
                   style={{ border: "1px solid #12B7F2" }}
                 >
                   <Form.Control
-                    type="text"
+                    type="number"
+                    min={0}
                     placeholder="0.0"
                     className="border-0 bg-transparent"
+                    value={bnbAmount}
+                    onChange={handleBnbAmountChange}
                   />
                   <img
                     src={bnbYellow}
@@ -138,9 +215,12 @@ function Presale({ presaleData }) {
                   style={{ border: "1px solid #12B7F2" }}
                 >
                   <Form.Control
-                    type="text"
+                    type="number"
+                    min={0}
                     placeholder="0.0"
                     className="border-0 bg-transparent"
+                    value={matarAmount}
+                    onChange={handleMATARAmountChange}
                   />
                   <img
                     src={matar}
@@ -152,7 +232,31 @@ function Presale({ presaleData }) {
             </Col>
           </Row>
         </div>
-        <ButtonFilled name={currentLanguage === "english" ? "Connect Wallet" : "ربط المحفظة"} />
+        <Web3Button
+          contractAddress={process.env.REACT_APP_PRESALE_CONTRACT_ADDRESS}
+          action={buyTokensHandler}
+          connectWallet={{
+            btnTitle:
+              currentLanguage === "english" ? "Connect Wallet" : "ربط المحفظة",
+            modalTitle: "Login",
+            // ... etc
+          }}
+          // btnTitle={currentLanguage === "english" ? "Buy MATAR" : "ربط المحفظة"}
+          style={{
+            background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+            color: "white",
+            textAlign: "center",
+            padding: "10px 15px",
+            fontFamily: "Russo One",
+            borderRadius: "5px",
+            display: "inline-block",
+            cursor: "pointer",
+            border: "none",
+            outline: "none",
+          }}
+        >
+          Buy MATAR
+        </Web3Button>
       </div>
     </Container>
   );

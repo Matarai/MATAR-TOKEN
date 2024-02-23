@@ -9,7 +9,7 @@ import Introduction from "./sections/Introduction";
 import MatarWallet from "./sections/MatarWallet";
 import Documents from "./sections/Documents";
 import Tokenomics from "./sections/Tokenomics";
-import {Timeline} from "./sections/Timeline";
+import { Timeline } from "./sections/Timeline";
 
 export default function Home() {
   return (

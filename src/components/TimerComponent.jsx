@@ -5,9 +5,30 @@ import { Col, Row } from "react-bootstrap";
 import { ReportButton, SmartContract } from "./Buttons";
 import heroData from "../content/heroData";
 import { useSelector } from "react-redux";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
 
 const TimerComponent = () => {
-  const deadline = new Date("Feb 15, 2024").getTime();
+  const { contract } = useContract(
+    process.env.REACT_APP_PRESALE_CONTRACT_ADDRESS
+  );
+  const { data: currentRound } = useContractRead(contract, "currentRound");
+  const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
+  const roundData = rounds?.map((item) => item.toString());
+  const endTime = roundData
+    ? roundData[1]
+    : Date.now().toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+  const date = new Date(endTime * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+  const localizedDateString = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  // const deadline = localizedDateString;
+  const deadline = new Date(localizedDateString.toString()).getTime();
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const tokenSale = heroData[currentLanguage].tokenSale;
   return (

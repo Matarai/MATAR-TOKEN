@@ -8,20 +8,120 @@ import { Col, Form, Row } from "react-bootstrap";
 import { ButtonFilled } from "./Buttons";
 import matar from "../assets/Icon/matar.svg";
 import bnbYellow from "../assets/Icon/bnb.svg";
+import styles from "./styles/buttons.module.css";
 import { useSelector } from "react-redux";
+import {
+  useContract,
+  useContractRead,
+  Web3Button,
+  useContractWrite,
+} from "@thirdweb-dev/react";
+import { ethers } from "ethers";
+import { contractABI, presaleContractABI } from "../constants/contractABI";
 
 function Presale({ presaleData }) {
   const [loaderValue, setLoaderValue] = React.useState(0);
+  const [bnbAmount, setBnbAmount] = React.useState("");
+  const [matarAmount, setMatarAmount] = React.useState("");
+  const [tokenForEachRound, setTokenForEachRound] = React.useState(0);
+  const [currentRound, setCurrentRound] = React.useState(0);
+  const [rounds, setRounds] = React.useState([]);
+  const [totalSupply, setTotalSupply] = React.useState(0);
+  const [currentWallet, setCurrentWallet] = React.useState("");
   const { currentLanguage } = useSelector((state) => state.login);
 
+  // Read Contract
+  // const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  const preSaleContractAddress = "0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d";
+  const contractAddress = "0xc530F79ED10b000aeaFDdDe7B4353E0a09335f65";
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const presaleContract = new ethers.Contract(
+    preSaleContractAddress,
+    presaleContractABI,
+    provider
+  );
+  const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+  const connectMetamaskWallet = async () => {
+    console.log(currentWallet);
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setCurrentWallet(accounts[0]);
+  };
+  const fetchContractData = async () => {
+    const totalSupply = await contract.totalSupply();
+    setTotalSupply(totalSupply);
+  };
+
+  const fetchPresaleData = async () => {
+    const tokenForEachRound = await presaleContract.tokenForEachRound();
+    const currentRound = await presaleContract.currentRound();
+    const rounds = await presaleContract.rounds(currentRound);
+    setTokenForEachRound(tokenForEachRound);
+    setCurrentRound(currentRound);
+    setRounds(rounds);
+  };
+
+  // const tokenPrice = "0";
+  // const tokenSold = "0";
+  // const tokenGoal = "0";
+  const roundData =
+    rounds.length > 0 ? rounds.map((item) => item.toString()) : [];
+  const tokenPrice = roundData ? roundData[2] : "0";
+  const tokenSold = roundData ? roundData[3] : "0";
+  const tokenGoal = roundData ? roundData[4] : "0";
+
   const data = {
-    totalSupply: "21.000.000",
-    availableForSale: "1.000.000",
+    totalSupply: totalSupply
+      ? parseFloat(ethers.utils.formatEther(totalSupply))
+          .toLocaleString("en-US", {
+            maximumFractionDigits: 0,
+          })
+          .replace(/,/g, ".")
+      : "...",
+    availableForSale: tokenForEachRound
+      ? parseFloat(tokenForEachRound)
+          .toLocaleString("en-US", {
+            maximumFractionDigits: 0,
+          })
+          .replace(/,/g, ".")
+      : "...",
     matar: {
-      price: "21.000",
-      maxPrice: "200.000",
+      price: tokenSold,
+      maxPrice: tokenGoal * tokenPrice,
     },
   };
+
+  const buyTokensHandler = async () => {
+    const signer = provider.getSigner();
+    const contractWithSigner = presaleContract.connect(signer);
+    try {
+      const data = await contractWithSigner.buyTokens({
+        value: ethers.utils.parseEther(bnbAmount.toString()),
+      });
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+  const handleBnbAmountChange = (event) => {
+    const enteredAmount = event.target.value;
+    const calculatedMatarAmount = enteredAmount * tokenPrice;
+    setBnbAmount(enteredAmount);
+    setMatarAmount(calculatedMatarAmount.toFixed(6));
+  };
+  const handleMATARAmountChange = (event) => {
+    const enteredAmount = event.target.value;
+    const calculatedMatarAmount = enteredAmount / tokenPrice;
+    setMatarAmount(enteredAmount);
+    setBnbAmount(calculatedMatarAmount.toFixed(6));
+  };
+
+  useEffect(() => {
+    fetchPresaleData();
+    fetchContractData();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,7 +130,6 @@ function Presale({ presaleData }) {
     }, 1000);
     return () => clearInterval(interval);
   });
-
   return (
     <Container className="presaleWrapper">
       <p
@@ -116,9 +215,12 @@ function Presale({ presaleData }) {
                   style={{ border: "1px solid #12B7F2" }}
                 >
                   <Form.Control
-                    type="text"
+                    type="number"
+                    min={0}
                     placeholder="0.0"
                     className="border-0 bg-transparent"
+                    value={bnbAmount}
+                    onChange={handleBnbAmountChange}
                   />
                   <img
                     src={bnbYellow}
@@ -138,9 +240,12 @@ function Presale({ presaleData }) {
                   style={{ border: "1px solid #12B7F2" }}
                 >
                   <Form.Control
-                    type="text"
+                    type="number"
+                    min={0}
                     placeholder="0.0"
                     className="border-0 bg-transparent"
+                    value={matarAmount}
+                    onChange={handleMATARAmountChange}
                   />
                   <img
                     src={matar}
@@ -152,7 +257,24 @@ function Presale({ presaleData }) {
             </Col>
           </Row>
         </div>
-        <ButtonFilled name={currentLanguage === "english" ? "Connect Wallet" : "ربط المحفظة"} />
+        <div
+          onClick={() =>
+            currentWallet.length > 0
+              ? buyTokensHandler()
+              : connectMetamaskWallet()
+          }
+        >
+          <ButtonFilled
+            name={
+              currentWallet.length > 0
+                ? "Buy MATAR"
+                : currentLanguage === "english"
+                ? "Connect Wallet"
+                : "ربط المحفظة"
+            }
+            className={`${styles.buttonFilled} position-relative `}
+          />
+        </div>
       </div>
     </Container>
   );

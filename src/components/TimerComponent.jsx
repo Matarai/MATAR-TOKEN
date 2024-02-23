@@ -45,11 +45,11 @@ const TimerComponent = () => {
     const totalAmount = await getRounds(parsedCurrentRoundValue);
     const ethRaised = await getNewEthRaised();
     const parsedEthRaised = parseInt(ethRaised);
-    setRaised((parsedEthRaised / 10 ** 18) * bnbValue);
+    setRaised((parsedEthRaised / 10 ** 18) * bnbValue);     // set the amount of raise for the loader
     const parsedtotalAmount = parseInt(totalAmount?.targetGoal);
     const ethBalance = parsedEthRaised / 10 ** 18;
     const percentage = (ethBalance / parsedtotalAmount) * 100;
-    setFilled(percentage);
+    setFilled(percentage);  // set the purcentage of the filled loader
   };
 
   const getBNDTOUSD = async () => {

@@ -17,35 +17,61 @@ import {
   useContractWrite,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
+import { contractABI, presaleContractABI } from "../constants/contractABI";
 
 function Presale({ presaleData }) {
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
+  const [tokenForEachRound, setTokenForEachRound] = React.useState(0);
+  const [currentRound, setCurrentRound] = React.useState(0);
+  const [rounds, setRounds] = React.useState([]);
+  const [totalSupply, setTotalSupply] = React.useState(0);
+  const [currentWallet, setCurrentWallet] = React.useState("");
   const { currentLanguage } = useSelector((state) => state.login);
 
   // Read Contract
-  const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
-  const { data: totalSupply } = useContractRead(contract, "totalSupply");
-  const { contract: presaleContract } = useContract(
-    process.env.REACT_APP_PRESALE_CONTRACT_ADDRESS
+  // const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  const preSaleContractAddress = "0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d";
+  const contractAddress = "0xc530F79ED10b000aeaFDdDe7B4353E0a09335f65";
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const presaleContract = new ethers.Contract(
+    preSaleContractAddress,
+    presaleContractABI,
+    provider
   );
-  const { data: tokenForEachRound } = useContractRead(
-    presaleContract,
-    "tokenForEachRound"
-  );
-  const { data: currentRound } = useContractRead(
-    presaleContract,
-    "currentRound"
-  );
-  const { data: rounds } = useContractRead(presaleContract, "rounds", [
-    currentRound,
-  ]);
+  const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
-  const roundData = rounds?.map((item) => item.toString());
+  const connectMetamaskWallet = async () => {
+    console.log(currentWallet);
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setCurrentWallet(accounts[0]);
+  };
+  const fetchContractData = async () => {
+    const totalSupply = await contract.totalSupply();
+    setTotalSupply(totalSupply);
+  };
+
+  const fetchPresaleData = async () => {
+    const tokenForEachRound = await presaleContract.tokenForEachRound();
+    const currentRound = await presaleContract.currentRound();
+    const rounds = await presaleContract.rounds(currentRound);
+    setTokenForEachRound(tokenForEachRound);
+    setCurrentRound(currentRound);
+    setRounds(rounds);
+  };
+
+  // const tokenPrice = "0";
+  // const tokenSold = "0";
+  // const tokenGoal = "0";
+  const roundData =
+    rounds.length > 0 ? rounds.map((item) => item.toString()) : [];
   const tokenPrice = roundData ? roundData[2] : "0";
-  const tokenSold = roundData ? ethers.utils.formatEther(roundData[3]) : "0";
+  const tokenSold = roundData ? roundData[3] : "0";
   const tokenGoal = roundData ? roundData[4] : "0";
+
   const data = {
     totalSupply: totalSupply
       ? parseFloat(ethers.utils.formatEther(totalSupply))
@@ -67,15 +93,12 @@ function Presale({ presaleData }) {
     },
   };
 
-  // Write Contract
-  const { mutateAsync: buyTokens, isLoading } = useContractWrite(
-    presaleContract,
-    "buyTokens"
-  );
   const buyTokensHandler = async () => {
+    const signer = provider.getSigner();
+    const contractWithSigner = presaleContract.connect(signer);
     try {
-      const data = await buyTokens({
-        value: bnbAmount.toString(),
+      const data = await contractWithSigner.buyTokens({
+        value: ethers.utils.parseEther(bnbAmount.toString()),
       });
       console.info("contract call successs", data);
     } catch (err) {
@@ -84,16 +107,21 @@ function Presale({ presaleData }) {
   };
   const handleBnbAmountChange = (event) => {
     const enteredAmount = event.target.value;
-    const calculatedMatarAmount = enteredAmount * 141;
+    const calculatedMatarAmount = enteredAmount * tokenPrice;
     setBnbAmount(enteredAmount);
     setMatarAmount(calculatedMatarAmount.toFixed(6));
   };
   const handleMATARAmountChange = (event) => {
     const enteredAmount = event.target.value;
-    const calculatedMatarAmount = enteredAmount / 141;
+    const calculatedMatarAmount = enteredAmount / tokenPrice;
     setMatarAmount(enteredAmount);
     setBnbAmount(calculatedMatarAmount.toFixed(6));
   };
+
+  useEffect(() => {
+    fetchPresaleData();
+    fetchContractData();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -102,9 +130,6 @@ function Presale({ presaleData }) {
     }, 1000);
     return () => clearInterval(interval);
   });
-  // const { contract, isLoading } = useContract(
-  //   process.env.NEXT_PUBLIC_PRESALE_CONTRACT_ADDRESS
-  // );
   return (
     <Container className="presaleWrapper">
       <p
@@ -232,31 +257,24 @@ function Presale({ presaleData }) {
             </Col>
           </Row>
         </div>
-        <Web3Button
-          contractAddress={process.env.REACT_APP_PRESALE_CONTRACT_ADDRESS}
-          action={buyTokensHandler}
-          connectWallet={{
-            btnTitle:
-              currentLanguage === "english" ? "Connect Wallet" : "ربط المحفظة",
-            modalTitle: "Login",
-            // ... etc
-          }}
-          // btnTitle={currentLanguage === "english" ? "Buy MATAR" : "ربط المحفظة"}
-          style={{
-            background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
-            color: "white",
-            textAlign: "center",
-            padding: "10px 15px",
-            fontFamily: "Russo One",
-            borderRadius: "5px",
-            display: "inline-block",
-            cursor: "pointer",
-            border: "none",
-            outline: "none",
-          }}
+        <div
+          onClick={() =>
+            currentWallet.length > 0
+              ? buyTokensHandler()
+              : connectMetamaskWallet()
+          }
         >
-          Buy MATAR
-        </Web3Button>
+          <ButtonFilled
+            name={
+              currentWallet.length > 0
+                ? "Buy MATAR"
+                : currentLanguage === "english"
+                ? "Connect Wallet"
+                : "ربط المحفظة"
+            }
+            className={`${styles.buttonFilled} position-relative `}
+          />
+        </div>
       </div>
     </Container>
   );

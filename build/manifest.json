@@ -1,0 +1,25 @@
+{
+  "short_name": "MATAR TOKEN",
+  "name": "Matar Token is a decentralized finance (DeFi) token that is built on the Binance Smart Chain (BSC) network. The Matar Token is a BEP-20 token that is designed to be used as a store of value and as a medium of exchange.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -23,9 +23,7 @@ const CountDown = ({ deadline, timer }) => {
         new Date().getUTCMinutes(),
         new Date().getUTCSeconds()
       )
-      console.log(utcTimeStamp, "utcTimeStamp");
       const totalSeconds = (deadline - (utcTimeStamp / 1000));
-      console.log(deadline, utcTimeStamp, totalSeconds, "totalSeconds")
       if (totalSeconds < 0) {
         clearInterval(interval);
       }

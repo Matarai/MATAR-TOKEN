@@ -44,9 +44,31 @@ function Presale({ presaleData }) {
   );
 
   const call = async () => {
+    if (bnbAmount <= 0 || bnbAmount === "") {
+      toast.error("Please enter the amount of BNB", {
+        position: "top-right",
+      });
+      return;
+    }
     try {
+      toast("Accept txn in your wallet", {
+        duration: 5000,
+        position: "top-right",
+      });
       const data = await buyTokens({
         overrides: { value: ethers.utils.parseEther(bnbAmount) },
+      });
+      toast.success("Transaction submitted!", {
+        action: {
+          label: "View",
+          onClick: () => {
+            window.open(
+              `https://testnet.bscscan.com/tx/${data.receipt.transactionHash}`
+            );
+          },
+        },
+        duration: 5000,
+        position: "top-right",
       });
       console.info("contract call successs", data);
     } catch (err) {
@@ -284,16 +306,6 @@ function Presale({ presaleData }) {
               name={isLoading ? "Loading..." : "Buy MATAR"}
               className={`${styles.buttonFilled} position-relative `}
             />
-            <ConnectWallet
-            name={address ? "Connect Wallet" : "ربط المحفظة"}
-            modalSize="compact"
-            theme={"dark"}
-            style={{
-              background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
-              fontFamily: "Russo One",
-            }}
-            className={`${styles.buttonFilled} position-relative text-light`}
-          />
           </div>
         ) : (
           <ConnectWallet

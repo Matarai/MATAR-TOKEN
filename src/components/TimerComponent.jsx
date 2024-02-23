@@ -29,13 +29,11 @@ const TimerComponent = () => {
         day: "numeric",
       });
   const date = new Date(endTime * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-  console.log(endTime, "date");
   const localizedDateString = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
-  console.log(localizedDateString, "localizedDateString");
   const deadline = new Date(localizedDateString.toString()).getTime();
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const tokenSale = heroData[currentLanguage].tokenSale;
@@ -56,7 +54,6 @@ const TimerComponent = () => {
   // get roundes from the contract
   const getRoundes = async () => {
     const roundValues = await getRounds(1);
-    console.log(roundValues.active);
     if (roundValues?.active === true) {
       setIsActive(true);
     }

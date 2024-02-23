@@ -29,13 +29,9 @@ function Presale({ presaleData }) {
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
-  const [tokenForEachRound, setTokenForEachRound] = React.useState(0);
-  const [currentRound, setCurrentRound] = React.useState(0);
-  const [rounds, setRounds] = React.useState([]);
-  const [totalSupply, setTotalSupply] = React.useState(0);
   const [currentWallet, setCurrentWallet] = React.useState("");
   const { currentLanguage } = useSelector((state) => state.login);
-
+  const totalSupply = 21000000;
   // Read Contract
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
   const { mutateAsync: buyTokens, isLoading } = useContractWrite(
@@ -75,32 +71,13 @@ function Presale({ presaleData }) {
       console.error("contract call failure", err);
     }
   };
-  const preSaleContractAddress = "0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d";
-  const contractAddress = "0xc530F79ED10b000aeaFDdDe7B4353E0a09335f65";
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const presaleContract = new ethers.Contract(
-    preSaleContractAddress,
-    presaleContractABI,
-    provider
-  );
-  const _contract = new ethers.Contract(contractAddress, contractABI, provider);
 
-  const fetchContractData = async () => {
-    const totalSupply = await _contract.totalSupply();
-    setTotalSupply(totalSupply);
-  };
-
-  const fetchPresaleData = async () => {
-    const tokenForEachRound = await presaleContract.tokenForEachRound();
-    const currentRound = await presaleContract.currentRound();
-    const rounds = await presaleContract.rounds(currentRound);
-    setTokenForEachRound(tokenForEachRound);
-    setCurrentRound(currentRound);
-    setRounds(rounds);
-  };
+  const { data: tokenForEachRound, isLoading: tokenEachRoundLoader } = useContractRead(contract, "tokenForEachRound")
+  const { data: currentRound, isLoading: currentRoundLoader } = useContractRead(contract, "currentRound")
+  const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
 
   const roundData =
-    rounds.length > 0 ? rounds.map((item) => item.toString()) : [];
+    rounds?.length > 0 ? rounds.map((item) => item.toString()) : [];
   const tokenPrice = roundData ? roundData[2] : "0";
   const tokenSold = roundData ? roundData[3] : "0";
   const tokenGoal = roundData ? roundData[4] : "0";
@@ -126,27 +103,6 @@ function Presale({ presaleData }) {
     },
   };
 
-  const buyTokensHandler = async () => {
-    const signer = provider.getSigner();
-    const contractWithSigner = presaleContract.connect(signer);
-    try {
-      const data = await contractWithSigner.buyTokens({
-        value: ethers.utils.parseEther(bnbAmount),
-      });
-
-      toast.success("Transaction submitted!", {
-        action: {
-          label: "View",
-          onClick: () => {
-            window.open(`https://testnet.bscscan.com/tx/${data.hash}`);
-          },
-        },
-      });
-      console.info("_contract call successs", data);
-    } catch (err) {
-      console.error("_contract call failure", err);
-    }
-  };
   const handleBnbAmountChange = (event) => {
     const enteredAmount = event.target.value;
     const calculatedMatarAmount = enteredAmount * tokenPrice;
@@ -159,11 +115,6 @@ function Presale({ presaleData }) {
     setMatarAmount(enteredAmount);
     setBnbAmount(calculatedMatarAmount.toFixed(6));
   };
-
-  useEffect(() => {
-    fetchPresaleData();
-    fetchContractData();
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -209,7 +160,7 @@ function Presale({ presaleData }) {
           }}
         >
           <p>{presaleData.AvailableForSale}</p>
-          <p className="fw-bold m-0">{data.totalSupply}</p>
+          <p className="fw-bold m-0">21.000.000</p>
         </div>
         <div className="text-center w-100">
           <p>{presaleData.totalSupply}</p>

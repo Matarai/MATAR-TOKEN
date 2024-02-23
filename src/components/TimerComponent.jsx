@@ -5,7 +5,6 @@ import { Col, Row } from "react-bootstrap";
 import { ReportButton, SmartContract } from "./Buttons";
 import heroData from "../content/heroData";
 import { useSelector } from "react-redux";
-import { getCurrentRound, getNewEthRaised, getRounds } from "../web3/methods";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import axios from "axios";
 
@@ -19,6 +18,7 @@ const TimerComponent = () => {
   );
   const { data: currentRound } = useContractRead(contract, "currentRound");
   const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
+  const { data: EthRaised } = useContractRead(contract, "EthRaised");
   const roundData = rounds?.map((item) => item.toString());
 
   const endTime = roundData
@@ -39,10 +39,10 @@ const TimerComponent = () => {
   const tokenSale = heroData[currentLanguage].tokenSale;
 
   const percentageOfRaisedAmount = async () => {
-    const currentRoundValue = await getCurrentRound();
+    const currentRoundValue = await currentRound;
     const parsedCurrentRoundValue = parseInt(currentRoundValue);
-    const totalAmount = await getRounds(parsedCurrentRoundValue);
-    const ethRaised = await getNewEthRaised();
+    const totalAmount = await rounds;
+    const ethRaised = await EthRaised;
     const parsedEthRaised = parseInt(ethRaised);
     setRaised((parsedEthRaised / 10 ** 18) * bnbValue); // set the amount of raise for the loader
     const parsedtotalAmount = parseInt(totalAmount?.targetGoal);
@@ -51,16 +51,7 @@ const TimerComponent = () => {
     setFilled(percentage); // set the purcentage of the filled loader
   };
 
-  // get roundes from the contract
-  const getRoundes = async () => {
-    const roundValues = await getRounds(1);
-    if (roundValues?.active === true) {
-      setIsActive(true);
-    }
-  };
-
   useEffect(() => {
-    getRoundes();
     percentageOfRaisedAmount();
   }, []);
 

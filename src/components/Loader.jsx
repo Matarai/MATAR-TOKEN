@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
+import { ethers } from "ethers";
+import axios from "axios";
 
-const LoaderThin = ({ color = "white", value = 0 }) => {
+const LoaderThin = ({ color = "white", value }) => {
   const { currentLanguage } = useSelector((state) => state.login);
   return (
     <div
@@ -49,7 +52,36 @@ const LoaderThin = ({ color = "white", value = 0 }) => {
 };
 
 const LoaderThick = ({ value, filled }) => {
+  let called = false;
+  const [price, setPrice] = useState(0);
   const color = filled > 50 ? "white" : "#0556BA";
+  const { contract } = useContract(
+    "0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d"
+  );
+
+  const { data, isLoading } = useContractRead(contract, "EthRaised");
+
+  const getBNBTOUSD = async () => {
+    try {
+      let reqOptions = {
+        url: process.env.REACT_APP_BNBTOUSD_CONVERSION,
+        method: "GET",
+      };
+
+      let response = await axios.request(reqOptions);
+      setPrice(response.data.price);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!called) {
+      getBNBTOUSD();
+      called = true;
+    }
+  }, []);
+
   return (
     <div
       className="rounded text-center"
@@ -87,7 +119,8 @@ const LoaderThick = ({ value, filled }) => {
           fontSize: "1rem",
         }}
       >
-        ${value}
+        $
+        {data ? (Number(ethers.utils.formatEther(data)) * price).toFixed(1) : 0}
       </span>
     </div>
   );

@@ -4,7 +4,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {
   ThirdwebProvider,
+  coinbaseWallet,
   metamaskWallet,
+  trustWallet,
   walletConnect,
 } from "@thirdweb-dev/react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -28,14 +30,15 @@ root.render(
       <BrowserRouter>
         <ThirdwebProvider
           supportedWallets={[
-            metamaskWallet({
-              recommended: true,
-            }),
+            metamaskWallet({ recommended: true }),
+            coinbaseWallet(),
+            walletConnect(),
+            trustWallet(),
           ]}
           activeChain={activeChain}
           clientId={process.env.REACT_APP_CLIENT_ID}
         >
-          <Toaster />
+          <Toaster richColors />
           <App />
         </ThirdwebProvider>
       </BrowserRouter>

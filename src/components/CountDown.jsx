@@ -13,9 +13,19 @@ const CountDown = ({ deadline, timer }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // Get date epoch in utc
       const now = new Date().getTime();
-      const totalSeconds = (deadline - now) / 1000;
-
+      const utcTimeStamp = Date.UTC(
+        new Date().getUTCFullYear(),
+        new Date().getUTCMonth(),
+        new Date().getUTCDate(),
+        new Date().getUTCHours(),
+        new Date().getUTCMinutes(),
+        new Date().getUTCSeconds()
+      )
+      console.log(utcTimeStamp, "utcTimeStamp");
+      const totalSeconds = (deadline - (utcTimeStamp / 1000));
+      console.log(deadline, utcTimeStamp, totalSeconds, "totalSeconds")
       if (totalSeconds < 0) {
         clearInterval(interval);
       }

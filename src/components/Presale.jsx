@@ -15,11 +15,17 @@ import {
   useContractRead,
   Web3Button,
   useContractWrite,
+  useAddress,
+  ConnectWallet,
+  useLogout,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { contractABI, presaleContractABI } from "../constants/contractABI";
+import { toast } from "sonner";
 
 function Presale({ presaleData }) {
+  const address = useAddress();
+  const { logout } = useLogout();
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
@@ -31,7 +37,22 @@ function Presale({ presaleData }) {
   const { currentLanguage } = useSelector((state) => state.login);
 
   // Read Contract
-  // const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
+  const { mutateAsync: buyTokens, isLoading } = useContractWrite(
+    contract,
+    "buyTokens"
+  );
+
+  const call = async () => {
+    try {
+      const data = await buyTokens({
+        overrides: { value: ethers.utils.parseEther(bnbAmount) },
+      });
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
   const preSaleContractAddress = "0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d";
   const contractAddress = "0xc530F79ED10b000aeaFDdDe7B4353E0a09335f65";
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -40,17 +61,10 @@ function Presale({ presaleData }) {
     presaleContractABI,
     provider
   );
-  const contract = new ethers.Contract(contractAddress, contractABI, provider);
+  const _contract = new ethers.Contract(contractAddress, contractABI, provider);
 
-  const connectMetamaskWallet = async () => {
-    console.log(currentWallet);
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    setCurrentWallet(accounts[0]);
-  };
   const fetchContractData = async () => {
-    const totalSupply = await contract.totalSupply();
+    const totalSupply = await _contract.totalSupply();
     setTotalSupply(totalSupply);
   };
 
@@ -63,9 +77,6 @@ function Presale({ presaleData }) {
     setRounds(rounds);
   };
 
-  // const tokenPrice = "0";
-  // const tokenSold = "0";
-  // const tokenGoal = "0";
   const roundData =
     rounds.length > 0 ? rounds.map((item) => item.toString()) : [];
   const tokenPrice = roundData ? roundData[2] : "0";
@@ -98,11 +109,20 @@ function Presale({ presaleData }) {
     const contractWithSigner = presaleContract.connect(signer);
     try {
       const data = await contractWithSigner.buyTokens({
-        value: ethers.utils.parseEther(bnbAmount.toString()),
+        value: ethers.utils.parseEther(bnbAmount),
       });
-      console.info("contract call successs", data);
+
+      toast.success("Transaction submitted!", {
+        action: {
+          label: "View",
+          onClick: () => {
+            window.open(`https://testnet.bscscan.com/tx/${data.hash}`);
+          },
+        },
+      });
+      console.info("_contract call successs", data);
     } catch (err) {
-      console.error("contract call failure", err);
+      console.error("_contract call failure", err);
     }
   };
   const handleBnbAmountChange = (event) => {
@@ -176,7 +196,7 @@ function Presale({ presaleData }) {
       </div>
       <p className="mt-4 text-center">{presaleData.subTitle}</p>
       {/* value range should be from 0 - 100 so calculate it first*/}
-      <LoaderThin value={loaderValue} color="#0556BA" />
+      <LoaderThin value={loaderValue / 10 ** 18} color="#0556BA" />
       <p
         style={{
           fontSize: "12px",
@@ -185,7 +205,7 @@ function Presale({ presaleData }) {
         }}
       >
         {currentLanguage === "english" ? "MATAR Raised:" : "مطر تم جمعها:"}{" "}
-        {data.matar.price} MATAR /{data.matar.maxPrice} MATAR
+        {data?.matar?.price / 10 ** 18} MATAR /{data.matar.maxPrice} MATAR
       </p>
 
       <Divider />
@@ -244,7 +264,8 @@ function Presale({ presaleData }) {
                     min={0}
                     placeholder="0.0"
                     className="border-0 bg-transparent"
-                    value={matarAmount}
+                    value={Number(matarAmount).toFixed(1)}
+                    disabled
                     onChange={handleMATARAmountChange}
                   />
                   <img
@@ -257,24 +278,35 @@ function Presale({ presaleData }) {
             </Col>
           </Row>
         </div>
-        <div
-          onClick={() =>
-            currentWallet.length > 0
-              ? buyTokensHandler()
-              : connectMetamaskWallet()
-          }
-        >
-          <ButtonFilled
-            name={
-              currentWallet.length > 0
-                ? "Buy MATAR"
-                : currentLanguage === "english"
-                ? "Connect Wallet"
-                : "ربط المحفظة"
-            }
-            className={`${styles.buttonFilled} position-relative `}
+        {address ? (
+          <div onClick={call}>
+            <ButtonFilled
+              name={isLoading ? "Loading..." : "Buy MATAR"}
+              className={`${styles.buttonFilled} position-relative `}
+            />
+            <ConnectWallet
+            name={address ? "Connect Wallet" : "ربط المحفظة"}
+            modalSize="compact"
+            theme={"dark"}
+            style={{
+              background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+              fontFamily: "Russo One",
+            }}
+            className={`${styles.buttonFilled} position-relative text-light`}
           />
-        </div>
+          </div>
+        ) : (
+          <ConnectWallet
+            name={address ? "Connect Wallet" : "ربط المحفظة"}
+            modalSize="compact"
+            theme={"dark"}
+            style={{
+              background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+              fontFamily: "Russo One",
+            }}
+            className={`${styles.buttonFilled} position-relative text-light`}
+          />
+        )}
       </div>
     </Container>
   );

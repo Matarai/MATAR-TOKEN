@@ -14,13 +14,13 @@ const TimerComponent = () => {
   const [isActive, setIsActive] = useState(false);
   const [raised, setRaised] = useState(null);
   const [filled, setFilled] = useState(0);
-  // const deadline = new Date("Feb 15, 2024").getTime();
   const { contract } = useContract(
-    process.env.REACT_APP_PRESALE_CONTRACT_ADDRESS
+    process.env.REACT_APP_CONTRACT_ADDRESS
   );
   const { data: currentRound } = useContractRead(contract, "currentRound");
   const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
   const roundData = rounds?.map((item) => item.toString());
+
   const endTime = roundData
     ? roundData[1]
     : Date.now().toLocaleString("en-US", {
@@ -29,12 +29,13 @@ const TimerComponent = () => {
         day: "numeric",
       });
   const date = new Date(endTime * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+  console.log(endTime, "date");
   const localizedDateString = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
-  // const deadline = localizedDateString;
+  console.log(localizedDateString, "localizedDateString");
   const deadline = new Date(localizedDateString.toString()).getTime();
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const tokenSale = heroData[currentLanguage].tokenSale;
@@ -45,26 +46,11 @@ const TimerComponent = () => {
     const totalAmount = await getRounds(parsedCurrentRoundValue);
     const ethRaised = await getNewEthRaised();
     const parsedEthRaised = parseInt(ethRaised);
-    setRaised((parsedEthRaised / 10 ** 18) * bnbValue);     // set the amount of raise for the loader
+    setRaised((parsedEthRaised / 10 ** 18) * bnbValue); // set the amount of raise for the loader
     const parsedtotalAmount = parseInt(totalAmount?.targetGoal);
     const ethBalance = parsedEthRaised / 10 ** 18;
     const percentage = (ethBalance / parsedtotalAmount) * 100;
-    setFilled(percentage);  // set the purcentage of the filled loader
-  };
-
-  const getBNDTOUSD = async () => {
-    try {
-      let reqOptions = {
-        url: process.env.REACT_APP_BNBTOUSD_CONVERSION,
-        method: "GET",
-      };
-
-      let response = await axios.request(reqOptions);
-      // console.log(response.data);
-      setBnbValue(response.data.price);
-    } catch (error) {
-      console.error(error);
-    }
+    setFilled(percentage); // set the purcentage of the filled loader
   };
 
   // get roundes from the contract
@@ -77,7 +63,6 @@ const TimerComponent = () => {
   };
 
   useEffect(() => {
-    getBNDTOUSD();
     getRoundes();
     percentageOfRaisedAmount();
   }, []);
@@ -104,7 +89,7 @@ const TimerComponent = () => {
           >
             {tokenSale.title}
           </p>
-          <CountDown deadline={deadline} timer={tokenSale} />
+          <CountDown deadline={endTime} timer={tokenSale} />
         </Col>
         <Col className="d-flex flex-column justify-content-center">
           <p
@@ -112,7 +97,7 @@ const TimerComponent = () => {
               fontSize: "14px",
             }}
           >
-            {!isActive ? tokenSale?.TotalRiasedAmount : ""}
+            {!isActive ? tokenSale?.TotalRiasedAmount : "Total Raised"}
           </p>
 
           {/* value range should be from 0 - 100 so calculate it first*/}

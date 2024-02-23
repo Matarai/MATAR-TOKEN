@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 export const Timeline = () => {
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
-  console.log(timeline[currentLanguage]);
+  
   return (
     <div className="timelineWrapper" id="roadmap">
       <p className="text-center">

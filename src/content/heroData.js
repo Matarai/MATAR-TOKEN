@@ -13,7 +13,7 @@ const heroData = {
           title: "Phase 1",
           amount: "0.80 USDT",
           quantity: "200.000 MATAR",
-          isActive: false,
+          isActive: true,
         },
         {
           title: "Phase 2",

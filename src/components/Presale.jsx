@@ -18,14 +18,15 @@ import {
   useAddress,
   ConnectWallet,
   useLogout,
+  useNetworkMismatch,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
-import { contractABI, presaleContractABI } from "../constants/contractABI";
 import { toast } from "sonner";
 
 function Presale({ presaleData }) {
   const address = useAddress();
   const { logout } = useLogout();
+  const isMismatched = useNetworkMismatch();
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
@@ -40,6 +41,13 @@ function Presale({ presaleData }) {
   );
 
   const call = async () => {
+    console.log(isMismatched);
+    if (isMismatched) {
+      toast.error("Wrong Network", {
+        position: "top-right",
+      });
+      return;
+    }
     if (bnbAmount <= 0 || bnbAmount === "") {
       toast.error("Please enter the amount of BNB", {
         position: "top-right",
@@ -47,10 +55,6 @@ function Presale({ presaleData }) {
       return;
     }
     try {
-      toast("Accept txn in your wallet", {
-        duration: 5000,
-        position: "top-right",
-      });
       const data = await buyTokens({
         overrides: { value: ethers.utils.parseEther(bnbAmount) },
       });
@@ -66,9 +70,11 @@ function Presale({ presaleData }) {
         duration: 5000,
         position: "top-right",
       });
-      console.info("contract call successs", data);
     } catch (err) {
-      console.error("contract call failure", err);
+      console.error(err);
+      toast.error(err.reason.toUpperCase(), {
+        position: "top-right",
+      });
     }
   };
 

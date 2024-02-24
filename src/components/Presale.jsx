@@ -72,8 +72,12 @@ function Presale({ presaleData }) {
     }
   };
 
-  const { data: tokenForEachRound, isLoading: tokenEachRoundLoader } = useContractRead(contract, "tokenForEachRound")
-  const { data: currentRound, isLoading: currentRoundLoader } = useContractRead(contract, "currentRound")
+  const { data: tokenForEachRound, isLoading: tokenEachRoundLoader } =
+    useContractRead(contract, "tokenForEachRound");
+  const { data: currentRound, isLoading: currentRoundLoader } = useContractRead(
+    contract,
+    "currentRound"
+  );
   const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
 
   const roundData =
@@ -252,12 +256,24 @@ function Presale({ presaleData }) {
           </Row>
         </div>
         {address ? (
-          <div onClick={call}>
-            <ButtonFilled
-              name={isLoading ? "Loading..." : "Buy MATAR"}
-              className={`${styles.buttonFilled} position-relative `}
+          <>
+            <div onClick={call}>
+              <ButtonFilled
+                name={isLoading ? "Loading..." : "Buy MATAR"}
+                className={`${styles.buttonFilled} position-relative `}
+              />
+            </div>
+            <ConnectWallet
+              name={address ? "Connect Wallet" : "ربط المحفظة"}
+              modalSize="compact"
+              theme={"dark"}
+              style={{
+                background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+                fontFamily: "Russo One",
+              }}
+              className={`${styles.buttonFilled} position-relative text-light`}
             />
-          </div>
+          </>
         ) : (
           <ConnectWallet
             name={address ? "Connect Wallet" : "ربط المحفظة"}

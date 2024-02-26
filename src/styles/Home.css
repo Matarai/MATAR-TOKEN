@@ -238,4 +238,7 @@
   .presale_choose_network::before{
     width: 50%;
   }
+  .presale-matar-qty-title{
+    font-size: 0.75rem !important;
+  }
 }

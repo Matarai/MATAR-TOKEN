@@ -7,28 +7,33 @@ import heroData from "../content/heroData";
 import { useSelector } from "react-redux";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import axios from "axios";
+import { ethers } from "ethers";
 
 const TimerComponent = () => {
   const [bnbValue, setBnbValue] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [raised, setRaised] = useState(null);
   const [filled, setFilled] = useState(0);
-  const { contract } = useContract(
-    process.env.REACT_APP_CONTRACT_ADDRESS
-  );
+  const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
   const { data: currentRound } = useContractRead(contract, "currentRound");
+  const { data: endTime } = useContractRead(contract, "endTime");
+  const { data: startTime } = useContractRead(contract, "startTime");
   const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
-  const { data: EthRaised } = useContractRead(contract, "EthRaised");
+  const { data: EthRaised } = useContractRead(contract, "totalSold");
+  const { data: BNBPrice } = useContractRead(contract, "getBNBPrice");
+  const { data: tokenForAllRound, isLoading: tokenForAllRoundLoader } =
+    useContractRead(contract, "tokenForAllRound");
   const roundData = rounds?.map((item) => item.toString());
+  const tokenPrice = roundData ? roundData[0] : "0";
 
-  const endTime = roundData
+  const endTimeDate = roundData
     ? roundData[1]
     : Date.now().toLocaleString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
       });
-  const date = new Date(endTime * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+  const date = new Date(endTimeDate * 1000); // Multiply by 1000 to convert from seconds to milliseconds
   const localizedDateString = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -44,16 +49,25 @@ const TimerComponent = () => {
     const totalAmount = await rounds;
     const ethRaised = await EthRaised;
     const parsedEthRaised = parseInt(ethRaised);
-    setRaised((parsedEthRaised / 10 ** 18) * bnbValue); // set the amount of raise for the loader
+    // setRaised((parsedEthRaised / 10 ** 18) * bnbValue); // set the amount of raise for the loader
+    const bnbPrice = BNBPrice ? BNBPrice / 10 ** 8 : "0";
+    setRaised(
+      ethRaised
+        ? ethers.utils.formatEther(ethRaised) *
+            ((bnbPrice * tokenPrice) / 10 ** 8)
+        : 0
+    ); // set the amount of raise for the loader
     const parsedtotalAmount = parseInt(totalAmount?.targetGoal);
     const ethBalance = parsedEthRaised / 10 ** 18;
-    const percentage = (ethBalance / parsedtotalAmount) * 100;
+    const percentage = ethRaised
+      ? (ethers.utils.formatEther(ethRaised) / parseInt(tokenForAllRound)) * 100
+      : 0;
     setFilled(percentage); // set the purcentage of the filled loader
   };
 
   useEffect(() => {
     percentageOfRaisedAmount();
-  }, []);
+  }, [EthRaised]);
 
   return (
     <div
@@ -75,9 +89,15 @@ const TimerComponent = () => {
               fontSize: "14px",
             }}
           >
-            {tokenSale.title}
+            {startTime > new Date().getTime() / 1000
+              ? tokenSale.titleStart
+              : tokenSale.titleEnd}
           </p>
-          <CountDown deadline={endTime} timer={tokenSale} />
+          <CountDown
+            deadline={endTime}
+            timer={tokenSale}
+            startDateTime={startTime}
+          />
         </Col>
         <Col className="d-flex flex-column justify-content-center">
           <p
@@ -98,7 +118,7 @@ const TimerComponent = () => {
           >
             <ReportButton button1={tokenSale.button1} />
             <a
-              href="https://testnet.bscscan.com/address/0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d#code"
+              href="https://testnet.bscscan.com/address/0x904146de7948BB8Aa2cB2d2155665368c07C116c#code"
               target="_blank"
               rel="noreferrer"
             >

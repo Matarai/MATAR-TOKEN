@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./styles/countDown.module.css";
 
-const CountDown = ({ deadline, timer }) => {
+const CountDown = ({ deadline, startDateTime, timer }) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -10,10 +10,16 @@ const CountDown = ({ deadline, timer }) => {
   const padNumber = (number) => {
     return number.toString().padStart(2, "0");
   };
-
   useEffect(() => {
+    let referenceTime;
+    // Check if startDateTime is in the future compared to current time
+    if (startDateTime > new Date().getTime() / 1000) {
+      referenceTime = startDateTime;
+    } else {
+      referenceTime = deadline;
+    }
+
     const interval = setInterval(() => {
-      // Get date epoch in utc
       const now = new Date().getTime();
       const utcTimeStamp = Date.UTC(
         new Date().getUTCFullYear(),
@@ -22,8 +28,8 @@ const CountDown = ({ deadline, timer }) => {
         new Date().getUTCHours(),
         new Date().getUTCMinutes(),
         new Date().getUTCSeconds()
-      )
-      const totalSeconds = (deadline - (utcTimeStamp / 1000));
+      );
+      const totalSeconds = referenceTime - utcTimeStamp / 1000;
       if (totalSeconds < 0) {
         clearInterval(interval);
       }
@@ -36,7 +42,7 @@ const CountDown = ({ deadline, timer }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [deadline]);
+  }, [deadline, startDateTime]);
 
   return (
     <div className={style.timers}>

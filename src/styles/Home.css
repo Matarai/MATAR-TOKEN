@@ -25,7 +25,7 @@
     background-position: 100vw 0;
   }
 }
-.heroWrapper{
+.heroWrapper {
   background-image: url(../assets/herobg.jpg);
   background-color: rgba(0, 0, 0, 0.5); /* 50% opacity */
   background-blend-mode: multiply;
@@ -34,7 +34,7 @@
 }
 .hero-content {
   /* background-image: url(../assets/flare.png); */
-  width: 100%;
+  /* width: 100%; */
   /* background-blend-mode: color-dodge; */
   /* background-size: cover; */
   /* background-position: center; */
@@ -61,6 +61,10 @@
 .timer-buttons {
   display: flex;
   justify-content: center;
+}
+.presaleWrapper {
+  padding-left: 32px;
+  padding-right: 32px;
 }
 .presaleWrapper input:focus {
   box-shadow: none;
@@ -171,7 +175,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .heroWrapper{
+  .heroWrapper {
     background-image: url(../assets/herobg-mobile.jpg);
     background-size: cover;
     background-position: center;

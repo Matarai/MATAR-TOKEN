@@ -43,7 +43,8 @@ const heroData = {
     },
 
     tokenSale: {
-      title: "Token Sale End In!",
+      titleStart: "Token Sale Starts In!",
+      titleEnd: "Token Sale Ends In!",
       days: "Days",
       hours: "Hours",
       minutes: "Mins",
@@ -103,7 +104,8 @@ const heroData = {
     },
 
     tokenSale: {
-      title: "نهاية بيع التوكن!",
+      titleStart: "يبدأ بيع الرمز المميز!",
+      titleEnd: "نهاية بيع التوكن!",
       days: "الايام",
       hours: "الساعات",
       minutes: "الدقائق",

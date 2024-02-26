@@ -51,7 +51,7 @@ body {
 .pt-50 {
   padding-top: 50px;
 }
-.pb-50{
+.pb-50 {
   padding-bottom: 50px;
 }
 
@@ -152,7 +152,7 @@ body {
     padding-left: 10rem !important;
   }
   .mt-md-10 {
-      margin-top: 10rem!important;
+    margin-top: 10rem !important;
   }
   .heading {
     font-family: "Russo One";
@@ -239,7 +239,9 @@ body {
   border-radius: 5px;
   width: fit-content;
 }
-.language-dropdown button{
+.language-dropdown button {
+  font-size: 14px;
+  padding: 0 auto;
   border: none;
 }
 
@@ -252,5 +254,8 @@ body {
 .language-dropdown:hover {
   background: linear-gradient(180deg, #12b7f2 24%, #134fab 124%) !important;
   border-radius: 5px !important;
-  width: fit-content; 
+  width: fit-content;
+}
+.tw-connected-wallet__balance {
+  color: #fff !important;
 }

@@ -19,7 +19,7 @@ function Herioc() {
     <div className="mt-md-0 pb-0 pb-md-5 heroWrapper">
       <Container className="wideContainer">
         <Row className={rltStatus && "flex-row-reverse"}>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={7}>
             <RainBackground />
             <div
               className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 gap-4 ${

@@ -4,7 +4,7 @@ import { useContract, useContractRead } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import axios from "axios";
 
-const LoaderThin = ({ color = "white", value }) => {
+const LoaderThin = ({ color = "white", value, priceTillNextRound }) => {
   const { currentLanguage } = useSelector((state) => state.login);
   return (
     <div
@@ -43,6 +43,7 @@ const LoaderThin = ({ color = "white", value }) => {
           fontSize: "1rem",
         }}
       >
+        ${priceTillNextRound}{" "}
         {currentLanguage === "english"
           ? "Until Next Phase"
           : "حتى المرحلة التالية"}
@@ -52,35 +53,33 @@ const LoaderThin = ({ color = "white", value }) => {
 };
 
 const LoaderThick = ({ value, filled }) => {
-  let called = false;
-  const [price, setPrice] = useState(0);
+  // let called = false;
+  // const [price, setPrice] = useState(0);
   const color = filled > 50 ? "white" : "#0556BA";
-  const { contract } = useContract(
-    "0xb3c164d6c21509E6370138Bf9eC72b8e3E95245d"
-  );
+  // const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
 
-  const { data, isLoading } = useContractRead(contract, "EthRaised");
+  // const { data, isLoading } = useContractRead(contract, "EthRaised");
 
-  const getBNBTOUSD = async () => {
-    try {
-      let reqOptions = {
-        url: process.env.REACT_APP_BNBTOUSD_CONVERSION,
-        method: "GET",
-      };
+  // const getBNBTOUSD = async () => {
+  //   try {
+  //     let reqOptions = {
+  //       url: process.env.REACT_APP_BNBTOUSD_CONVERSION,
+  //       method: "GET",
+  //     };
 
-      let response = await axios.request(reqOptions);
-      setPrice(response.data.price);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     let response = await axios.request(reqOptions);
+  //     setPrice(response.data.price);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (!called) {
-      getBNBTOUSD();
-      called = true;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!called) {
+  //     getBNBTOUSD();
+  //     called = true;
+  //   }
+  // }, []);
 
   return (
     <div
@@ -119,8 +118,7 @@ const LoaderThick = ({ value, filled }) => {
           fontSize: "1rem",
         }}
       >
-        $
-        {data ? (Number(ethers.utils.formatEther(data)) * price).toFixed(1) : 0}
+        ${value ? Number(value).toFixed(1) : 0}
       </span>
     </div>
   );

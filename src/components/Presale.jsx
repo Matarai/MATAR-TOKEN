@@ -80,17 +80,19 @@ function Presale({ presaleData }) {
 
   const { data: tokenForEachRound, isLoading: tokenEachRoundLoader } =
     useContractRead(contract, "tokenForEachRound");
+  const { data: tokenForAllRound, isLoading: tokenForAllRoundLoader } =
+    useContractRead(contract, "tokenForAllRound");
   const { data: currentRound, isLoading: currentRoundLoader } = useContractRead(
     contract,
     "currentRound"
   );
   const { data: rounds } = useContractRead(contract, "rounds", [currentRound]);
+  const { data: BNBPrice } = useContractRead(contract, "getBNBPrice");
 
   const roundData =
     rounds?.length > 0 ? rounds.map((item) => item.toString()) : [];
-  const tokenPrice = roundData ? roundData[2] : "0";
-  const tokenSold = roundData ? roundData[3] : "0";
-  const tokenGoal = roundData ? roundData[4] : "0";
+  const tokenPrice = roundData ? roundData[0] : "0";
+  const tokenSold = roundData ? roundData[1] : "0";
 
   const data = {
     totalSupply: totalSupply
@@ -100,30 +102,40 @@ function Presale({ presaleData }) {
           })
           .replace(/,/g, ".")
       : "...",
-    availableForSale: tokenForEachRound
-      ? parseFloat(tokenForEachRound)
+    availableForSale: tokenForAllRound
+      ? parseFloat(tokenForAllRound)
           .toLocaleString("en-US", {
             maximumFractionDigits: 0,
           })
           .replace(/,/g, ".")
       : "...",
     matar: {
-      price: tokenSold,
-      maxPrice: tokenGoal * tokenPrice,
+      price: tokenSold
+        ? parseFloat(ethers.utils.formatEther(tokenSold.toString())).toFixed(2)
+        : "...",
+      maxPrice: tokenForEachRound
+        ? parseFloat(tokenForEachRound.toString())
+        : "...",
+      priceTillNextRound: tokenPrice ? tokenPrice / 10 ** 8 : "...",
     },
   };
 
+  // console.log(BNBPrice ? BNBPrice / 10 ** 8 : "...");
+  // console.log(tokenPrice / 10 ** 8);
+  const bnbPrice = BNBPrice ? BNBPrice / 10 ** 8 : "0";
   const handleBnbAmountChange = (event) => {
     const enteredAmount = event.target.value;
-    const calculatedMatarAmount = enteredAmount * tokenPrice;
+    const calculatedMatarAmount =
+      enteredAmount * ((bnbPrice * tokenPrice) / 10 ** 8);
     setBnbAmount(enteredAmount);
-    setMatarAmount(calculatedMatarAmount.toFixed(6));
+    setMatarAmount(Number(calculatedMatarAmount).toFixed(2));
   };
   const handleMATARAmountChange = (event) => {
     const enteredAmount = event.target.value;
-    const calculatedMatarAmount = enteredAmount / tokenPrice;
+    const calculatedMatarAmount =
+      enteredAmount / ((bnbPrice * tokenPrice) / 10 ** 8);
     setMatarAmount(enteredAmount);
-    setBnbAmount(calculatedMatarAmount.toFixed(6));
+    setBnbAmount(Number(calculatedMatarAmount).toFixed(2));
   };
 
   useEffect(() => {
@@ -134,7 +146,7 @@ function Presale({ presaleData }) {
     return () => clearInterval(interval);
   });
   return (
-    <Container className="presaleWrapper">
+    <Container className="presaleWrapper px-5">
       <p
         className="text-center"
         style={{
@@ -179,7 +191,11 @@ function Presale({ presaleData }) {
       </div>
       <p className="mt-4 text-center">{presaleData.subTitle}</p>
       {/* value range should be from 0 - 100 so calculate it first*/}
-      <LoaderThin value={loaderValue / 10 ** 18} color="#0556BA" />
+      <LoaderThin
+        priceTillNextRound={data?.matar?.priceTillNextRound}
+        value={loaderValue / 10 ** 18}
+        color="#0556BA"
+      />
       <p
         style={{
           fontSize: "12px",
@@ -188,7 +204,7 @@ function Presale({ presaleData }) {
         }}
       >
         {currentLanguage === "english" ? "MATAR Raised:" : "مطر تم جمعها:"}{" "}
-        {data?.matar?.price / 10 ** 18} MATAR /{data.matar.maxPrice} MATAR
+        {data?.matar?.price} MATAR /{data.matar.maxPrice} MATAR
       </p>
 
       <Divider />
@@ -247,8 +263,7 @@ function Presale({ presaleData }) {
                     min={0}
                     placeholder="0.0"
                     className="border-0 bg-transparent"
-                    value={Number(matarAmount).toFixed(1)}
-                    disabled
+                    value={matarAmount}
                     onChange={handleMATARAmountChange}
                   />
                   <img
@@ -275,6 +290,7 @@ function Presale({ presaleData }) {
               theme={"dark"}
               style={{
                 background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+                color: "#ffffff !important",
                 fontFamily: "Russo One",
               }}
               className={`${styles.buttonFilled} position-relative text-light`}
@@ -287,6 +303,7 @@ function Presale({ presaleData }) {
             theme={"dark"}
             style={{
               background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+              color: "#ffffff !important",
               fontFamily: "Russo One",
             }}
             className={`${styles.buttonFilled} position-relative text-light`}

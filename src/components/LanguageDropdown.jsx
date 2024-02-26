@@ -10,13 +10,14 @@ const LanguageDropdown = () => {
     <DropdownButton
       id="dropdown-basic-primary"
       title={currentLanguage === "english" ? "English" : "عربي"}
-      className="language-dropdown py-1"
+      className="language-dropdown px-1"
     >
       <Dropdown.Item
         onClick={() => {
           dispatch(selectedLanguage("english"));
           dispatch(rltSidebarStatus(false));
         }}
+        className="py-0"
       >
         English
       </Dropdown.Item>

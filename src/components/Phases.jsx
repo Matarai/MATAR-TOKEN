@@ -21,18 +21,12 @@ const Phases = ({
   const priceTillNextRound = tokenPrice ? tokenPrice / 10 ** 8 : "...";
   return (
     <div className={isActive ? style.phaseStyleActive : style.phaseStyle}>
-      <p>{isActive || currentPhase >= index + 1 ? phaseNo : ""}</p>
+      <p>{phaseNo}</p>
       <h3>
-        {isActive || currentPhase >= index + 1
-          ? priceTillNextRound
-            ? "$" + parseFloat(priceTillNextRound.toString()).toFixed(2)
-            : "..."
-          : ""}{" "}
-        {isActive ? currency : ""}
+        {"$" + parseFloat(priceTillNextRound.toString()).toFixed(2)}
+        {currency}
       </h3>
-      <p className="matarValue">
-        {isActive || currentPhase >= index + 1 ? matarValue + " MATAR" : ""}
-      </p>
+      <p className="matarValue">{matarValue + " MATAR"}</p>
     </div>
   );
 };

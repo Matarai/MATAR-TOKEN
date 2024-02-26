@@ -221,7 +221,7 @@ function Presale({ presaleData }) {
           className="d-flex gap-3 pt-4 position-relative"
           style={{ zIndex: "1" }}
         >
-          <Row>
+          <Row xs={1} md={2}>
             <Col>
               <Form.Group controlId="formFile" className="">
                 <Form.Label>
@@ -249,7 +249,7 @@ function Presale({ presaleData }) {
                 </div>
               </Form.Group>
             </Col>
-            <Col>
+            <Col className="mt-4 mt-md-0">
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>
                   {currentLanguage === "english" ? "MATAR" : "مطر"}
@@ -280,7 +280,13 @@ function Presale({ presaleData }) {
           <>
             <div onClick={call}>
               <ButtonFilled
-                name={isLoading ? "Loading..." : "Buy MATAR"}
+                name={
+                  isLoading
+                    ? "Loading..."
+                    : !isMismatched
+                    ? "Buy MATAR"
+                    : "Wrong Network"
+                }
                 className={`${styles.buttonFilled} position-relative `}
               />
             </div>

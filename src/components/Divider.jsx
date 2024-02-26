@@ -14,14 +14,14 @@ const Divider = () => {
         alignItems: "center",
       }}
     >
-      <div
+      {/* <div
         style={{
           border: "none",
           width: "80%",
           height: "1px",
           backgroundColor: "#ffffff",
         }}
-      ></div>
+      ></div> */}
       <span
         style={{
           color: "#fff",
@@ -29,13 +29,13 @@ const Divider = () => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          background: "#051a47",
           padding: "0 15px",
           textAlign: "center",
           wordWrap: "nowrap",
           fontSize: "1rem",
           fontWeight: "bold",
         }}
+        className="presale_choose_network"
       >
         {currentLanguage === "english" ? "Choose Network" : "اختر الشبكة"}
       </span>

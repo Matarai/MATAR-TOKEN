@@ -193,8 +193,8 @@ function Presale({ presaleData }) {
       {/* value range should be from 0 - 100 so calculate it first*/}
       <LoaderThin
         priceTillNextRound={data?.matar?.priceTillNextRound}
-        value={loaderValue / 10 ** 18}
-        color="#0556BA"
+        value={loaderValue}
+        color={loaderValue > 50 ? "#fff" : "#0556BA"}
       />
       <p
         style={{

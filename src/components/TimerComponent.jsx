@@ -25,21 +25,6 @@ const TimerComponent = () => {
     useContractRead(contract, "tokenForAllRound");
   const roundData = rounds?.map((item) => item.toString());
   const tokenPrice = roundData ? roundData[0] : "0";
-
-  const endTimeDate = roundData
-    ? roundData[1]
-    : Date.now().toLocaleString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-  const date = new Date(endTimeDate * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-  const localizedDateString = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-  const deadline = new Date(localizedDateString.toString()).getTime();
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const tokenSale = heroData[currentLanguage].tokenSale;
 

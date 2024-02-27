@@ -19,6 +19,8 @@ import {
   ConnectWallet,
   useLogout,
   useNetworkMismatch,
+  ChainId,
+  useNetwork,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { toast } from "sonner";
@@ -27,6 +29,7 @@ function Presale({ presaleData }) {
   const address = useAddress();
   const { logout } = useLogout();
   const isMismatched = useNetworkMismatch();
+  const [, switchNetwork] = useNetwork();
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
@@ -46,6 +49,10 @@ function Presale({ presaleData }) {
       toast.error("Wrong Network", {
         position: "top-right",
       });
+      if (isMismatched) {
+        // Prompt their wallet to switch networks
+        switchNetwork(Number(process.env.REACT_APP_ACTIVE_CHAIN_ID));
+      }
       return;
     }
     if (bnbAmount <= 0 || bnbAmount === "") {
@@ -145,6 +152,16 @@ function Presale({ presaleData }) {
     }, 1000);
     return () => clearInterval(interval);
   });
+  useEffect(() => {
+    // Check if the user is connected to the wrong network
+    if (isMismatched) {
+      // Prompt their wallet to switch networks
+      toast.error("Wrong Network", {
+        position: "top-right",
+      });
+      switchNetwork(Number(process.env.REACT_APP_ACTIVE_CHAIN_ID)); // the chain you want here
+    }
+  }, [address]);
   return (
     <Container className="presaleWrapper px-5">
       <p

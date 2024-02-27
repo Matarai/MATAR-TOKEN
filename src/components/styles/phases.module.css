@@ -1,4 +1,4 @@
-.phaseStyle{
+.phaseStyle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -9,58 +9,59 @@
   border-radius: 10px;
   width: 65px;
   height: 65px;
+  opacity: 0.7;
 }
 
-.phaseStyleActive{
+.phaseStyleActive {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   margin-top: 20px;
   padding: 4px;
-  background: linear-gradient(90deg, #5FB7FB 0%, #1d51b0 100%);
+  background: linear-gradient(90deg, #5fb7fb 0%, #1d51b0 100%);
   border-radius: 10px;
   width: 75px;
   height: 75px;
 }
 
-.phaseStyle > p, 
-.phaseStyleActive > p{
+.phaseStyle > p,
+.phaseStyleActive > p {
   color: white;
   font-size: 8px;
   margin: 0;
 }
-.phaseStyle > h3, 
-.phaseStyleActive > h3{
+.phaseStyle > h3,
+.phaseStyleActive > h3 {
   color: white;
   font-size: 10px;
   margin: 0;
-  font-family: "Russo One"
+  font-family: "Russo One";
 }
 
-@media (min-width: 768px){
-  .phaseStyle{
+@media (min-width: 768px) {
+  .phaseStyle {
     width: 100px;
     height: 100px;
     padding: 6px;
   }
-  
-  .phaseStyleActive{
+
+  .phaseStyleActive {
     width: 120px;
     height: 120px;
     padding: 8px;
   }
 
-  .phaseStyle > h3, 
-  .phaseStyleActive > h3{
+  .phaseStyle > h3,
+  .phaseStyleActive > h3 {
     font-size: 14px;
   }
 
-  .phaseStyle > p, 
-  .phaseStyleActive > p{
+  .phaseStyle > p,
+  .phaseStyleActive > p {
     font-size: 12px;
   }
-  .matarValue{
+  .matarValue {
     font-size: 10px;
   }
 }

@@ -11,16 +11,16 @@ const CountDown = ({ deadline, startDateTime, timer }) => {
     return number.toString().padStart(2, "0");
   };
   useEffect(() => {
+    const now = new Date().getTime();
     let referenceTime;
     // Check if startDateTime is in the future compared to current time
-    if (startDateTime > new Date().getTime() / 1000) {
+    if (startDateTime > now / 1000) {
       referenceTime = startDateTime;
     } else {
       referenceTime = deadline;
     }
 
     const interval = setInterval(() => {
-      const now = new Date().getTime();
       const utcTimeStamp = Date.UTC(
         new Date().getUTCFullYear(),
         new Date().getUTCMonth(),
@@ -29,7 +29,10 @@ const CountDown = ({ deadline, startDateTime, timer }) => {
         new Date().getUTCMinutes(),
         new Date().getUTCSeconds()
       );
-      const totalSeconds = referenceTime - utcTimeStamp / 1000;
+      const totalSeconds =
+        startDateTime > now / 1000
+          ? utcTimeStamp / 1000 - referenceTime
+          : referenceTime - utcTimeStamp / 1000;
       if (totalSeconds < 0) {
         clearInterval(interval);
       }

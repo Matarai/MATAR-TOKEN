@@ -26,21 +26,6 @@ const TimerComponent = () => {
     const { data: totalSold } = useContractRead(contract, "totalSold");
   const roundData = rounds?.map((item) => item.toString());
   const tokenPrice = roundData ? roundData[0] : "0";
-
-  const endTimeDate = roundData
-    ? roundData[1]
-    : Date.now().toLocaleString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-  const date = new Date(endTimeDate * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-  const localizedDateString = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-  const deadline = new Date(localizedDateString.toString()).getTime();
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const tokenSale = heroData[currentLanguage].tokenSale;
 
@@ -51,11 +36,11 @@ const TimerComponent = () => {
     const ethRaised = await EthRaised;
     const parsedEthRaised = parseInt(ethRaised);
     // setRaised((parsedEthRaised / 10 ** 18) * bnbValue); // set the amount of raise for the loader
-    const bnbPrice = BNBPrice ? BNBPrice / 10 ** 8 : "0";
+    setBnbValue(BNBPrice ? BNBPrice / 10 ** 8 : 0);
     setRaised(
       ethRaised
         ? ethers.utils.formatEther(ethRaised) *
-            ((bnbPrice * tokenPrice) / 10 ** 8)
+            ((bnbValue * tokenPrice) / 10 ** 8)
         : 0
     ); // set the amount of raise for the loader
     const parsedtotalAmount = parseInt(totalAmount?.targetGoal);
@@ -68,7 +53,7 @@ const TimerComponent = () => {
 
   useEffect(() => {
     percentageOfRaisedAmount();
-  }, [EthRaised]);
+  }, [EthRaised, bnbValue]);
 
   return (
     <div

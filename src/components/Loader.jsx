@@ -94,7 +94,6 @@ const LoaderThick = ({ value, filled }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "hidden",
       }}
     >
       <div
@@ -112,9 +111,11 @@ const LoaderThick = ({ value, filled }) => {
       <span
         style={{
           position: "absolute",
+          bottom: "-30px",
+          left: "0",
           zIndex: 1,
           fontFamily: "Russo One",
-          color: `${color}`,
+          color: "#fff",
           fontSize: "1rem",
         }}
       >

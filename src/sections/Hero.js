@@ -22,9 +22,8 @@ function Herioc() {
           <Col xs={12} md={7}>
             <RainBackground />
             <div
-              className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 gap-4 ${
-                rltStatus && "directionRTL"
-              }`}
+              className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 gap-4 ${rltStatus && "directionRTL"
+                }`}
             >
               <h1 className="heading px-2 px-md-0">
                 {heroData[currentLanguage].heading}
@@ -37,20 +36,14 @@ function Herioc() {
                 className="d-flex justify-content-center justify-content-md-start w-100 align-items-center gap-5"
                 style={{ zIndex: "1" }}
               >
-                <ButtonFilled name={heroData[currentLanguage].button1} />
-                <a
-                  href={`${
-                    currentLanguage === "english"
-                      ? "https://matar.ai/whitepaper-en.pdf"
-                      : "https://matar.ai/whitepaper-ar.pdf"
-                  }`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <div>
-                    <ButtonOutline name={heroData[currentLanguage].button2} />
-                  </div>
+
+                <a href="https://nft.matar.ai" target="_black" rel="noreferrer">
+                  <ButtonFilled name={heroData[currentLanguage].button1} />
                 </a>
+                {/* Scroll to next section */}
+                <div onClick={() => window.scrollTo(0, window.innerHeight)}>
+                  <ButtonOutline name={heroData[currentLanguage].button2} />
+                </div>
               </div>
             </div>
             <div

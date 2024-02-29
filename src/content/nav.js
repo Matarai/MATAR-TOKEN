@@ -67,8 +67,6 @@ const routesAr = [
   },
 ];
 
-
-
 const navData = {
   english: {
     logo: logoEN,

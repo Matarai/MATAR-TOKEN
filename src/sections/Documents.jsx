@@ -58,7 +58,16 @@ const Documents = () => {
                     Whitepaper
                   </Button>
                 </a>
-                <Button variant="outline-light" className={style.btn}>
+                <Button
+                  variant="outline-light"
+                  className={style.btn}
+                  onClick={() =>
+                    window.open(
+                      "https://app.solidproof.io/projects/matar-ai?audit_id=962",
+                      "_blank"
+                    )
+                  }
+                >
                   Audit & KYC
                 </Button>
               </div>

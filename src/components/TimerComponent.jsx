@@ -108,7 +108,7 @@ const TimerComponent = () => {
           >
             <ReportButton button1={tokenSale.button1} />
             <a
-              href="https://testnet.bscscan.com/address/0x904146de7948BB8Aa2cB2d2155665368c07C116c#code"
+              href="https://bscscan.com/address/0xAa889fc852d065c37d762Dbc7295c7C9A3309B30#code"
               target="_blank"
               rel="noreferrer"
             >

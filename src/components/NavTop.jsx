@@ -41,10 +41,10 @@ export const NavTop = () => {
           </Nav>
           <div className="d-flex justify-content-center align-items-center gap-4">
             <LanguageDropdown />
-            <a href="https://nft.matar.ai" target="_blank" rel="noreferrer">
+            <a href="https://t.me/matar_ai" target="_blank" rel="noreferrer">
               <div>
                 <NFTButton
-                  name={currentLanguage === "english" ? "MATAR NFT" : "nft مطر"}
+                  name={currentLanguage === "english" ? "TELEGRAM" : "برقية"}
                 />
               </div>
             </a>

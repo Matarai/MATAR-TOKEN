@@ -40,7 +40,8 @@ function Herioc() {
                 <a href="https://nft.matar.ai" target="_black" rel="noreferrer">
                   <ButtonFilled name={heroData[currentLanguage].button1} />
                 </a>
-                <div>
+                {/* Scroll to next section */}
+                <div onClick={() => window.scrollTo(0, window.innerHeight)}>
                   <ButtonOutline name={heroData[currentLanguage].button2} />
                 </div>
               </div>

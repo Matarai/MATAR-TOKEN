@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import style from "../styles/hero.module.css";
 import RainBackground from "../components/RainBackground";
 import { ComingSoon } from "../components/ComingSoon";
+import { isMobile } from "react-device-detect";
 
 function Herioc() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -41,7 +42,7 @@ function Herioc() {
                   <ButtonFilled name={heroData[currentLanguage].button1} />
                 </a>
                 {/* Scroll to next section */}
-                <div onClick={() => window.scrollTo(0, window.innerHeight)}>
+                <div onClick={() => window.scrollTo(0, (isMobile ? (window.innerHeight * 4) : (window.innerHeight * 2)))}>
                   <ButtonOutline name={heroData[currentLanguage].button2} />
                 </div>
               </div>

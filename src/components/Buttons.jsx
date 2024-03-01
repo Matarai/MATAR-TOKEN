@@ -22,7 +22,7 @@ const ButtonOutline = ({ name }) => {
 // ------------------- Hard Coded --------------------------
 const ReportButton = ({ button1 }) => {
   return (
-    <button className={`${style.buttonFilled1} me-4`} style={{width:"100px", textAlign:"center", padding:"6px 0", height:"auto"}}>
+    <button className={`${style.buttonFilled1} me-4`} style={{width:"100px", textAlign:"center", padding:"6px 0", height:"auto"}} onClick={() => window.open("https://app.solidproof.io/projects/matar-ai?audit_id=962", "_blank")}>
       {button1}
     </button>
   );

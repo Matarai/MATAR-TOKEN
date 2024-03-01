@@ -3,8 +3,8 @@ const heroData = {
     heading: "AI Blockchain Solutions",
     description:
       "MATAR combines blockchain and AI, offering innovative solutions for a smarter, decentralised future.",
-    button1: "Our Services",
-    button2: "Whitepaper",
+    button1: "MATAR NFT",
+    button2: "OUR SERVICES",
 
     cards: {
       title: "token sale Phases",
@@ -64,8 +64,8 @@ const heroData = {
     heading: "حلول بلوكشين الذكاء الاصطناعي",
     description:
       "يجمع مطر بين تقنية البلوكشين والذكاء الاصطناعي، ويقدم حلولًا مبتكرة لمستقبل أكثر ذكاءً ولامركزيًا. ",
-    button1: "خدماتنا",
-    button2: "الورقة البيضاء ",
+    button1: "مطر نفت",
+    button2: "خدماتنا",
 
     cards: {
       title: "مراحل بيع توكن مطر",

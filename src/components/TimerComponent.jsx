@@ -23,7 +23,7 @@ const TimerComponent = () => {
   const { data: BNBPrice } = useContractRead(contract, "getBNBPrice");
   const { data: tokenForAllRound, isLoading: tokenForAllRoundLoader } =
     useContractRead(contract, "tokenForAllRound");
-    const { data: totalSold } = useContractRead(contract, "totalSold");
+  const { data: totalSold } = useContractRead(contract, "totalSold");
   const roundData = rounds?.map((item) => item.toString());
   const tokenPrice = roundData ? roundData[0] : "0";
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
@@ -95,11 +95,10 @@ const TimerComponent = () => {
           </p>
 
           {/* value range should be from 0 - 100 so calculate it first*/}
-          <LoaderThick value={
-            (BNBPrice / 10 ** 8) * (EthRaised / 10 ** 18)
-          } filled={
-            ((totalSold / 10**18) / tokenForAllRound) * 100
-          } />
+          <LoaderThick
+            value={(BNBPrice / 10 ** 8) * (EthRaised / 10 ** 18)}
+            filled={(totalSold / 10 ** 18 / tokenForAllRound) * 100}
+          />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <div

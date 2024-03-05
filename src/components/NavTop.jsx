@@ -44,7 +44,7 @@ export const NavTop = () => {
             <a href="https://t.me/matar_ai" target="_blank" rel="noreferrer">
               <div>
                 <NFTButton
-                  name={currentLanguage === "english" ? "TELEGRAM" : "برقية"}
+                  name={currentLanguage === "english" ? "TELEGRAM" : "تلغرام"}
                 />
               </div>
             </a>

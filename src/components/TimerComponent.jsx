@@ -11,7 +11,6 @@ import { ethers } from "ethers";
 
 const TimerComponent = () => {
   const [bnbValue, setBnbValue] = useState(0);
-  const [isActive, setIsActive] = useState(true);
   const [raised, setRaised] = useState(null);
   const [filled, setFilled] = useState(0);
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
@@ -91,7 +90,7 @@ const TimerComponent = () => {
               fontSize: "14px",
             }}
           >
-            {!isActive ? tokenSale?.TotalRiasedAmount : "Total Raised"}
+            {tokenSale?.TotalRiasedAmount}
           </p>
 
           {/* value range should be from 0 - 100 so calculate it first*/}

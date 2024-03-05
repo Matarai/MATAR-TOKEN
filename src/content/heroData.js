@@ -49,7 +49,7 @@ const heroData = {
       hours: "Hours",
       minutes: "Mins",
       seconds: "Secs",
-      TotalRiasedAmount: "Coming soon",
+      TotalRiasedAmount: "Total Raised",
       button1: "Report Audit",
       button2: "Smart Contract",
     },
@@ -64,7 +64,7 @@ const heroData = {
     heading: "حلول بلوكشين الذكاء الاصطناعي",
     description:
       "يجمع مطر بين تقنية البلوكشين والذكاء الاصطناعي، ويقدم حلولًا مبتكرة لمستقبل أكثر ذكاءً ولامركزيًا. ",
-    button1: "مطر نفت",
+    button1: " مطر NFT ",
     button2: "خدماتنا",
 
     cards: {
@@ -110,7 +110,7 @@ const heroData = {
       hours: "الساعات",
       minutes: "الدقائق",
       seconds: "الثواني ",
-      TotalRiasedAmount: "قريباً",
+      TotalRiasedAmount: "الاجمالي",
       button1: "تقرير التدقيق",
       button2: "العقد الذكي  ",
     },

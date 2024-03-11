@@ -10,11 +10,13 @@ import MatarWallet from "./sections/MatarWallet";
 import Documents from "./sections/Documents";
 import Tokenomics from "./sections/Tokenomics";
 import { Timeline } from "./sections/Timeline";
+import { PriceDividor } from "./components/PriceDividor";
 
 export default function Home() {
   return (
     <main className="main">
       <NavTop />
+      <PriceDividor />
       <Herioc />
       <SectionDivide />
       <Introduction />

@@ -11,7 +11,7 @@ const Phases = ({
   isActive = false,
   currentPhase,
 }) => {
-  // console.log(currentPhase);
+  console.log(phaseNo)
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
 
   const { data: rounds } = useContractRead(contract, "rounds", [index + 1]);
@@ -21,12 +21,14 @@ const Phases = ({
   const priceTillNextRound = tokenPrice ? tokenPrice / 10 ** 8 : "...";
   return (
     <div className={isActive ? style.phaseStyleActive : style.phaseStyle}>
-      <p>{phaseNo}</p>
-      <h3>
-        {"$" + parseFloat(priceTillNextRound.toString()).toFixed(2)}
-        {currency}
+      {/* <p>{phaseNo}</p> */}
+      <h3 className="mb-0">
+        {phaseNo}
+        {/* {parseFloat(priceTillNextRound.toString()).toFixed(2)}
+        {currency} */}
       </h3>
-      <p className="matarValue">{matarValue + " MATAR"}</p>
+      {/* <span style={{ fontSize: "8px" }}>MATAR/USD</span>
+      <p className="matarValue">{"200K MATAR"}</p> */}
     </div>
   );
 };

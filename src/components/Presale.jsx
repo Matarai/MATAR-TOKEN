@@ -198,7 +198,9 @@ function Presale({ presaleData }) {
             borderRight: "1px solid #ffffff40",
           }}
         >
-          <p className="presale-matar-qty-title">{presaleData.AvailableForSale}</p>
+          <p className="presale-matar-qty-title">
+            {presaleData.AvailableForSale}
+          </p>
           <p className="fw-bold m-0">21.000.000</p>
         </div>
         <div className="text-center w-100">
@@ -206,7 +208,9 @@ function Presale({ presaleData }) {
           <p className="fw-bold m-0">{data.availableForSale}</p>
         </div>
       </div>
-      <p className="mt-4 text-center presale-matar-qty-title">{presaleData.subTitle}</p>
+      <p className="mt-4 text-center presale-matar-qty-title">
+        {presaleData.subTitle}
+      </p>
       {/* value range should be from 0 - 100 so calculate it first*/}
       <LoaderThin
         priceTillNextRound={data?.matar?.priceTillNextRound}
@@ -228,6 +232,8 @@ function Presale({ presaleData }) {
 
       <div className="">
         <RadioButton
+          isLoading={isLoading}
+          switchNetwork={call}
           name={"network"}
           value={"BNB"}
           standard={"BEP-20"}

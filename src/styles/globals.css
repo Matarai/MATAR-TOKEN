@@ -24,6 +24,10 @@ body {
   background: #070707;
 }
 
+.russo-family {
+  font-family: "Russo One";
+}
+
 .header-first {
   color: #fff;
   font-family: "Russo One";

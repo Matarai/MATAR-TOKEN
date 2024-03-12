@@ -1,4 +1,4 @@
-.label{
+.label {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -6,7 +6,7 @@
   padding: 10px;
 }
 
-.customRadio{
+.customRadio {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,16 +17,23 @@
   border: 3px solid #fff;
 }
 
-.value{
+.value {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
 }
 
-.standard{
+.standard {
   font-size: 12px;
 }
 
-.label input:checked + .customRadio{
-  background: linear-gradient(180deg, #5FB7FB 0%, #1d51b0 100%);
+.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  background: linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%);
+  border-radius: 5px;
+  border: 3px solid #fff;
 }

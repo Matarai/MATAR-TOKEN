@@ -29,10 +29,8 @@ const CountDown = ({ deadline, startDateTime, timer }) => {
         new Date().getUTCMinutes(),
         new Date().getUTCSeconds()
       );
-      const totalSeconds =
-        startDateTime > now / 1000
-          ? utcTimeStamp / 1000 - referenceTime
-          : referenceTime - utcTimeStamp / 1000;
+      const totalSeconds = referenceTime - utcTimeStamp / 1000;
+
       if (totalSeconds < 0) {
         clearInterval(interval);
       }

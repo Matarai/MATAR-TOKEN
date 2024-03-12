@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import axios from "axios";
+import { isDesktop } from "react-device-detect";
 
 const LoaderThin = ({ color = "white", value, priceTillNextRound }) => {
   const { currentLanguage } = useSelector((state) => state.login);
@@ -43,7 +44,7 @@ const LoaderThin = ({ color = "white", value, priceTillNextRound }) => {
           fontSize: "1rem",
         }}
       >
-        ${priceTillNextRound}{" "}
+        {/* {priceTillNextRound}{" "} MATAR {" "} */}
         {currentLanguage === "english"
           ? "Until Next Phase"
           : "حتى المرحلة التالية"}

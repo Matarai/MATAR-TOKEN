@@ -11,7 +11,6 @@ import { ethers } from "ethers";
 
 const TimerComponent = () => {
   const [bnbValue, setBnbValue] = useState(0);
-  const [isActive, setIsActive] = useState(true);
   const [raised, setRaised] = useState(null);
   const [filled, setFilled] = useState(0);
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
@@ -23,7 +22,7 @@ const TimerComponent = () => {
   const { data: BNBPrice } = useContractRead(contract, "getBNBPrice");
   const { data: tokenForAllRound, isLoading: tokenForAllRoundLoader } =
     useContractRead(contract, "tokenForAllRound");
-    const { data: totalSold } = useContractRead(contract, "totalSold");
+  const { data: totalSold } = useContractRead(contract, "totalSold");
   const roundData = rounds?.map((item) => item.toString());
   const tokenPrice = roundData ? roundData[0] : "0";
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
@@ -91,15 +90,14 @@ const TimerComponent = () => {
               fontSize: "14px",
             }}
           >
-            {!isActive ? tokenSale?.TotalRiasedAmount : "Total Raised"}
+            {tokenSale?.TotalRiasedAmount}
           </p>
 
           {/* value range should be from 0 - 100 so calculate it first*/}
-          <LoaderThick value={
-            (BNBPrice / 10 ** 8) * (EthRaised / 10 ** 18)
-          } filled={
-            ((totalSold / 10**18) / tokenForAllRound) * 100
-          } />
+          <LoaderThick
+            value={(BNBPrice / 10 ** 8) * (EthRaised / 10 ** 18)}
+            filled={(totalSold / 10 ** 18 / tokenForAllRound) * 100}
+          />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <div

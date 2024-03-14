@@ -26,11 +26,11 @@ function Herioc() {
               className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 gap-4 ${rltStatus && "directionRTL"
                 }`}
             >
-              <h1 className="heading px-2 px-md-0">
+              <h1 className={`${style.heading} heading px-2 px-md-0`}>
                 {heroData[currentLanguage].heading}
               </h1>
 
-              <p className={`${style.description} mt-4`}>
+              <p className={`${style.description}`}>
                 {heroData[currentLanguage].description}
               </p>
               <div

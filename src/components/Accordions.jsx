@@ -1,6 +1,5 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 export const Accordions = ({ _key, title, body }) => {
   return (

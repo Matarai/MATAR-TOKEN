@@ -22,7 +22,13 @@ const RadioButton = ({ name, value, standard, icon }) => {
       }}
     >
       <input type="button" name={name} className="d-none" value={value} />
-      <div className={connectionStatus === "connected" && !networkMismatch ? styles.active : styles.customRadio}>
+      <div
+        className={
+          connectionStatus === "connected" && !networkMismatch
+            ? styles.active
+            : styles.customRadio
+        }
+      >
         <div className="d-flex gap-3 align-items-center">
           <div>{icon && <img src={icon} alt="icon" width="150%" />}</div>
           <div className="d-flex flex-column">

@@ -8,7 +8,7 @@
   background-color: #808797;
   border-radius: 10px;
   width: 65px;
-  height: 65px;
+  height: 39px;
   opacity: 0.7;
 }
 
@@ -42,13 +42,13 @@
 @media (min-width: 768px) {
   .phaseStyle {
     width: 100px;
-    height: 100px;
+    height: 39px;
     padding: 6px;
   }
 
   .phaseStyleActive {
     width: 120px;
-    height: 120px;
+    height: 59px;
     padding: 8px;
   }
 

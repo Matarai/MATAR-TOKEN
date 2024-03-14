@@ -52,6 +52,14 @@ body {
   margin-top: 7rem;
 }
 
+.pt-40 {
+  padding-top: 40px;
+}
+
+.pb-30 {
+  padding-bottom: 30px;
+}
+
 .pt-50 {
   padding-top: 50px;
 }

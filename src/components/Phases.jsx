@@ -11,7 +11,6 @@ const Phases = ({
   isActive = false,
   currentPhase,
 }) => {
-  console.log(phaseNo)
   const { contract } = useContract(process.env.REACT_APP_CONTRACT_ADDRESS);
 
   const { data: rounds } = useContractRead(contract, "rounds", [index + 1]);

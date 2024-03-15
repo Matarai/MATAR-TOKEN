@@ -13,23 +13,22 @@ import { useSelector } from "react-redux";
 import {
   useContract,
   useContractRead,
-  Web3Button,
   useContractWrite,
   useAddress,
   ConnectWallet,
   useLogout,
   useNetworkMismatch,
-  ChainId,
-  useNetwork,
+  useSwitchChain,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { toast } from "sonner";
+import { Binance } from "@thirdweb-dev/chains";
 
 function Presale({ presaleData }) {
   const address = useAddress();
   const { logout } = useLogout();
   const isMismatched = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
+  const switchChain = useSwitchChain();
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
@@ -44,14 +43,17 @@ function Presale({ presaleData }) {
   );
 
   const call = async () => {
-    console.log(isMismatched);
     if (isMismatched) {
-      toast.error("Wrong Network", {
-        position: "top-right",
-      });
+      // toast.error("Wrong Network", {
+      //   position: "top-right",
+      // });
       if (isMismatched) {
         // Prompt their wallet to switch networks
-        switchNetwork(Number(process.env.REACT_APP_ACTIVE_CHAIN_ID));
+        try {
+          await switchChain(Binance.chainId);
+        } catch (error) {
+          console.error(error);
+        }
       }
       return;
     }
@@ -145,6 +147,19 @@ function Presale({ presaleData }) {
     setBnbAmount(Number(calculatedMatarAmount).toFixed(2));
   };
 
+  const switchNetworkToBNB = async () => {
+    try {
+      if (isMismatched) {
+        await switchChain(Binance.chainId);
+        toast.success("Switched to Binance Smart Chain", {
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       let val = (data.matar.price / data.matar.maxPrice) * 100;
@@ -153,14 +168,7 @@ function Presale({ presaleData }) {
     return () => clearInterval(interval);
   });
   useEffect(() => {
-    // Check if the user is connected to the wrong network
-    if (isMismatched) {
-      // Prompt their wallet to switch networks
-      toast.error("Wrong Network", {
-        position: "top-right",
-      });
-      switchNetwork(Number(process.env.REACT_APP_ACTIVE_CHAIN_ID)); // the chain you want here
-    }
+    switchNetworkToBNB();
   }, [address]);
 
   const ReferralComponent = () => {

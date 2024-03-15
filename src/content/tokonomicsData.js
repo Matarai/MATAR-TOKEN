@@ -53,7 +53,7 @@ const tokonomicsData = {
                 li1: "1. Token Utility MATAR Token Powers",
                 li2: "MATAR Token Powers Essential Project Services",
                 li3: "2. Fee Structure",
-                li4: "Token Used for Creating Tokens and AI-Generated NFTs",
+                li4: "Token Used for AI Integration in Blockchain Solutions",
                 li5: "Sustainable Ecosystem with Service Fees"
             },
             card3: {
@@ -119,7 +119,7 @@ const tokonomicsData = {
                 li1: "1- فائدة الرمز المميز",
                 li2: "يعمل رمز MATAR على تشغيل خدمات المشروع الأساسية",
                 li3: "2- هيكل الرسوم",
-                li4: "لرمز المميز المستخدم لإنشاء الرموز المميزة وNFTs المولدة بالذكاء الاصطناعي",
+                li4: "الرمز المميز المستخدم لدمج الذكاء الاصطناعي في حلول البلوكشين",
                 li5: "النظام البيئي المستدام مع رسوم الخدمة"
             },
             card3: {

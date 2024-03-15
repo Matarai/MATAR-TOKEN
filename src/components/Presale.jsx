@@ -372,7 +372,7 @@ function Presale({ presaleData }) {
               }}
               className={`${styles.buttonFilled} position-relative text-light`}
             />
-            <ReferralComponent />
+            {/* <ReferralComponent /> */}
           </>
         ) : (
           <div>
@@ -390,7 +390,7 @@ function Presale({ presaleData }) {
                 className={`${styles.buttonFilled} position-relative text-light`}
               />
             </div>
-            <ReferralComponent />
+            {/* <ReferralComponent /> */}
           </div>
         )}
       </div>

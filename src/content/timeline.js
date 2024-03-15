@@ -4,49 +4,49 @@ export const timeline = {
     title: "THE TIMELINE OF OUR BUSINESS",
     milestones: [
       {
-        title: "MATAR Services",
+        title: "Planning and Preparation",
         details: [
-          "MATAR Wallet Development",
-          "Token Creation Service",
-          "Swapping service integration",
-          "AI Image Generation Service",
+          "Define the objectives of token creation, wallet integration, and NFT Matar functionality.",
+          "Conduct market research to understand user needs and preferences.",
+          "Assess technical requirements and choose suitable blockchain platforms and protocols."
         ],
       },
       {
-        title: "Research and Development",
+        title: "Development",
         details: [
-          "In-depth exploration of AI and blockchain integration.",
-          "Market analysis to identify key use cases and challenges.",
+          "Develop the Matar token",
+          "Develop & Integrate wallet functionality to allow users to securely manage Matar tokens and NFTs.",
+          "Implement option for users to purchase crypto with credit/debit cards directly from the wallet.",
         ],
       },
       {
-        title: "Conceptualization",
+        title: "Advanced Features Integration",
         details: [
-          "Define project goals and objectives.",
-          "Formulate a comprehensive strategy for seamless AI and blockchain convergence.",
+          "Add functionality to send crypto balances using username.matar addresses for ease of use.",
+          "Develop feature to display gains claimed from holding NFT Matar every 3 months.",
         ],
       },
       {
-        title: "Prototyping",
+        title: "Swapping Service Integration",
         details: [
-          "Develop initial prototypes showcasing AI and blockchain integration.",
-          "Conduct internal testing and gather feedback.",
+          "Integrate a swapping service for seamless exchange of cryptocurrencies within the wallet.",
+          "Validate functionality and usability of token and wallet features.",
         ],
       },
       {
-        title: "Integration Partnership",
+        title: "Post-Launch Activities",
         details: [
-          "Forge strategic partnerships with businesses and platforms for real-world integration.",
-          "Collaborate with AI and blockchain experts for continuous improvement.",
+          "List Matar token on decentralized exchanges (DEX) after presale completion.",
+          "Apply for and secure listings on CoinMarketCap (CMC) and CoinGecko.",
         ],
       },
       {
-        title: "Beta Testing & Mainnet Launch",
+        title: "Future Partnerships",
         details: [
-          "Release beta versions to a select user group.",
-          "Collect user feedback to enhance performance and user experience.",
-          "Officially launch MATAR's mainnet.",
-          "Enable full-scale AI and blockchain solutions for public use.",
+          "Listing in Top CEX",
+          "Partnership with big web3 Companies",
+          "NFT Marketplace",
+          "Visa Debit Card integration",
         ],
       },
     ],
@@ -56,49 +56,48 @@ export const timeline = {
     title: "الجدول الزمني من أعمالنا",
     milestones: [
       {
-        title: "خدمات مطر",
+        title: "التخطيط والإعداد",
         details: [
-          "تطوير محفظة مطر",
-          "خدمة إنشاء الرمز المميز",
-          "تبادل تكامل الخدمة",
-          "خدمة إنشاء الصور بالذكاء الاصطناعي",
+          "أهداف إنشاء الرمز المميز وتكامل المحفظة ووظيفة NFT Matar",
+          "إجراء أبحاث السوق لفهم احتياجات المستخدم وتفضيلاته",
+        "تقييم المتطلبات الفنية واختيار منصات وبروتوكولات blockchain المناسبة",
         ],
       },
       {
-        title: "البحث والتطوير",
+        title: "تطوير",
         details: [
-          "استكشاف متعمق للذكاء الاصطناعي وتكامل blockchain.",
-          "تحليل السوق لتحديد حالات الاستخدام الرئيسية والتحديات.",
+          "تطوير رمز مطر تطوير ودمج وظائف المحفظة للسماح للمستخدمين بإدارة رموز مطر و NFTs بشكل آمن",
+          "تنفيذ خيار للمستخدمين لشراء العملات المشفرة باستخدام بطاقات الائتمان/الخصم مباشرةً من المحفظة",
         ],
       },
       {
-        title: "التصور",
+        title: "تكامل الميزات المتقدمة",
         details: [
-          "تحديد أهداف وغايات المشروع.",
-          "قم بصياغة استراتيجية شاملة للتقارب السلس بين الذكاء الاصطناعي و blockchain.",
+          "أضافة وظيفة لإرسال أرصدة التشفير باستخدام عناوين username.matar لسهولة الاستخدام",
+          "تطوير ميزة لعرض المكاسب المطالب بها من الاحتفاظ بـ NFT Matar كل 3 أشهر",
         ],
       },
       {
-        title: "النماذج الأولية",
+        title: "مبادلة تكامل الخدمة",
         details: [
-          "تطوير نماذج أولية تعرض تكامل الذكاء الاصطناعي وتقنية blockchain.",
-          "إجراء اختبار داخلي وجمع التعليقات.",
+          "دمج خدمة المبادلة للتبادل السلس للعملات المشفرة داخل المحفظة",
+          "التحقق من صحة وظائف وسهولة استخدام ميزات الرمز المميز والمحفظة",
         ],
       },
       {
-        title: "شراكة التكامل",
+        title: "أنشطة ما بعد الإطلاق",
         details: [
-          "إقامة شراكات استراتيجية مع الشركات والمنصات لتحقيق التكامل في العالم الحقيقي.",
-          "تعاون مع خبراء الذكاء الاصطناعي وتقنية blockchain من أجل التحسين المستمر.",
+          "قم بإدراج رمز مطر في البورصات اللامركزية (DEX) بعد اكتمال البيع المسبق",
+         "تقدم بطلب للحصول على القوائم وتأمينها على CoinMarketCap (CMC) وCoinGecko.",
         ],
       },
       {
-        title: "اختبار النسخة التجريبية وإطلاق الشبكة الرئيسية",
+        title: "الشراكات المستقبلية",
         details: [
-          "إطلاق الإصدارات التجريبية لمجموعة مستخدمين محددة.",
-          "جمع تعليقات المستخدمين لتحسين الأداء وتجربة المستخدم.",
-          "إطلاق الشبكة الرئيسية لـ MATAR رسميًا.",
-          "تمكين حلول الذكاء الاصطناعي و blockchain واسعة النطاق للاستخدام العام.",
+          "الإدراج في أعلى CEX",
+          "الشراكة مع شركات web3 الكبرى",
+          "سوق NFT",
+          "تكامل بطاقة الخصم فيزا",
         ],
       },
     ],

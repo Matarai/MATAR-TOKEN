@@ -11,7 +11,7 @@
 }
 
 .id{
-  background: var(--Grad-01, linear-gradient(116deg, #5FB7FB 0%, #1D51B0 100%));
+  background: var(--Grad-01, linear-gradient(116deg, #12B7F2 0%, #05E5FE 100%));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

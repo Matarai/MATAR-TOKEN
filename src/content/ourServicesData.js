@@ -1,7 +1,7 @@
-import createToken from "../assets/services/createToken.svg";
-import Swap from "../assets/services/Swap.svg";
-import NftAi from "../assets/services/NFTAI.svg";
-import NFTMarketPlace from "../assets/services/NFTMarketPlace.svg";
+import createToken from "../assets/services/NFTMATAR.png";
+import Swap from "../assets/services/Swap.png";
+import NftAi from "../assets/services/Visa.png";
+import NFTMarketPlace from "../assets/services/Blockchain.png";
 
 const ourServicesData = {
   english: {
@@ -12,7 +12,7 @@ const ourServicesData = {
         id: "01",
         title: "NFT Holder Rewards Program",
         description: "Unlocking value for MATAR NFT holders by offering exclusive rewards every three months, incentivizing long-term engagement and loyalty within the MATAR ecosystem.",
-        image: Swap,
+        image: createToken,
         linkTo: "/swap",
         active: true,
       },
@@ -21,7 +21,7 @@ const ourServicesData = {
         title: "Swap",
         description:
           "Easily exchange digital assets through our swap service, facilitating quick and secure transactions within the MATAR ecosystem.",
-        image: createToken,
+        image: Swap,
         linkTo: "/create-token",
       },
       {
@@ -49,7 +49,7 @@ const ourServicesData = {
         id: "٠١",
         title: "برنامج مكافآت لحاملي NFT",
         description:"فتح قيمة لحاملي NFT لـ MATAR عن طريق تقديم مكافآت حصرية كل ثلاثة أشهر، مما يحفز على المشاركة طويلة الأجل والولاء داخل نظام MATAR",
-        image: Swap,
+        image: createToken,
         linkTo: "/swap",
         active: true,
       },
@@ -57,7 +57,7 @@ const ourServicesData = {
         id: "٠٢",
         title: "سواب",
         description: "تبادل الأصول الرقمية بسهولة من خلال خدمة التبادل الخاصة بنا، لتيسير المعاملات السريعة والآمنة ضمن نظام.",
-        image: createToken,
+        image: Swap,
         linkTo: "/create-token",
       },
       {

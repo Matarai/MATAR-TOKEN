@@ -57,7 +57,7 @@ const RadioButton = ({ name, value, standard, icon }) => {
             <span className={styles.value}>{value}</span>
             {standard && <span className={styles.standard}>{standard}</span>}
           </div> */}
-          <span>Click here to copy your referral link</span>
+          <span>Copy your referral link</span>
         </div>
       </div>
     </label>

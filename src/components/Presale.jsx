@@ -297,8 +297,8 @@ function Presale({ presaleData }) {
               <Form.Group controlId="formFile" className="">
                 <Form.Label>
                   {currentLanguage === "english"
-                    ? "Amount in BNB"
-                    : "bnb الكمية من"}
+                    ? "Amount in BNB (BEP20)"
+                    : "(BEP20) bnb الكمية من"}
                 </Form.Label>
                 <div
                   className="d-flex justify-content-center align-items-center rounded pe-2 py-2"

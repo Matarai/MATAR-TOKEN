@@ -37,7 +37,7 @@ const Divider = () => {
         }}
         className="presale_choose_network"
       >
-        {currentLanguage === "english" ? "Choose Network" : "اختر الشبكة"}
+        {currentLanguage === "english" ? "Referral Link" : "رابط الإحالة"}
       </span>
     </div>
   );

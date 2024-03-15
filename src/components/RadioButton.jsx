@@ -4,10 +4,13 @@ import {
   useConnectionStatus,
   useNetworkMismatch,
   useSwitchChain,
+  useAddress,
 } from "@thirdweb-dev/react";
+import { toast } from "sonner";
 import { Binance } from "@thirdweb-dev/chains";
 
 const RadioButton = ({ name, value, standard, icon }) => {
+  const address = useAddress();
   const switchChain = useSwitchChain();
   const networkMismatch = useNetworkMismatch();
   const connectionStatus = useConnectionStatus();
@@ -21,11 +24,24 @@ const RadioButton = ({ name, value, standard, icon }) => {
       }
     }
   };
+
+  const handleCopyReferralLink = () => {
+    if (!address) {
+      toast.error("No wallet found", {
+        position: "top-right",
+      });
+      return;
+    }
+    navigator.clipboard.writeText(`https://matar.ai?referral=${address}`);
+    toast.success("Referral link copied!", {
+      position: "top-right",
+    });
+  };
   return (
     <label
       className={styles.label}
-      style={{ zIndex: "1", position: "relative" }}
-      onClick={handleSwitchChain}
+      style={{ zIndex: "1", position: "relative", cursor: "pointer" }}
+      onClick={handleCopyReferralLink}
     >
       <input type="button" name={name} className="d-none" value={value} />
       <div
@@ -35,12 +51,13 @@ const RadioButton = ({ name, value, standard, icon }) => {
             : styles.customRadio
         }
       >
-        <div className="d-flex gap-3 align-items-center">
-          <div>{icon && <img src={icon} alt="icon" width="150%" />}</div>
+        <div className="d-flex gap-3 align-items-center py-2">
+          {/* <div>{icon && <img src={icon} alt="icon" width="150%" />}</div>
           <div className="d-flex flex-column">
             <span className={styles.value}>{value}</span>
             {standard && <span className={styles.standard}>{standard}</span>}
-          </div>
+          </div> */}
+          <span>Click here to copy your referral link</span>
         </div>
       </div>
     </label>

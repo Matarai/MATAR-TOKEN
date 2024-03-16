@@ -16,7 +16,6 @@ import {
   useContractWrite,
   useAddress,
   ConnectWallet,
-  useLogout,
   useNetworkMismatch,
   useSwitchChain,
 } from "@thirdweb-dev/react";
@@ -26,13 +25,12 @@ import { Binance } from "@thirdweb-dev/chains";
 
 function Presale({ presaleData }) {
   const address = useAddress();
-  const { logout } = useLogout();
+  const [referralUrl, setReferralUrl] = React.useState(null);
   const isMismatched = useNetworkMismatch();
   const switchChain = useSwitchChain();
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
-  const [currentWallet, setCurrentWallet] = React.useState("");
   const { currentLanguage } = useSelector((state) => state.login);
   const totalSupply = 21000000;
   // Read Contract
@@ -42,11 +40,29 @@ function Presale({ presaleData }) {
     "buyTokens"
   );
 
+  // referral contract
+  const { contract: referralContract } = useContract(
+    process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS
+  );
+
+  const { mutateAsync: buyTokensWithReferral, isLoading: isLoadingReferral } =
+    useContractWrite(referralContract, "buyTokensWithReferral");
+
+  const successToast = (data) => {
+    toast.success("Transaction submitted!", {
+      action: {
+        label: "View",
+        onClick: () => {
+          window.open(`https://bscscan.com/tx/${data.receipt.transactionHash}`);
+        },
+      },
+      duration: 5000,
+      position: "top-right",
+    });
+  };
+
   const call = async () => {
     if (isMismatched) {
-      // toast.error("Wrong Network", {
-      //   position: "top-right",
-      // });
       if (isMismatched) {
         // Prompt their wallet to switch networks
         try {
@@ -64,21 +80,19 @@ function Presale({ presaleData }) {
       return;
     }
     try {
-      const data = await buyTokens({
-        overrides: { value: ethers.utils.parseEther(bnbAmount) },
-      });
-      toast.success("Transaction submitted!", {
-        action: {
-          label: "View",
-          onClick: () => {
-            window.open(
-              `https://bscscan.com/tx/${data.receipt.transactionHash}`
-            );
-          },
-        },
-        duration: 5000,
-        position: "top-right",
-      });
+      if (referralUrl) {
+        console.log("contract", referralContract);
+        const tokenWithReferralData = await buyTokensWithReferral(referralUrl, {
+          overrides: { value: ethers.utils.parseEther(bnbAmount) },
+        });
+        successToast(tokenWithReferralData);
+      } else {
+        console.log("contract", contract);
+        const data = await buyTokens({
+          overrides: { value: ethers.utils.parseEther(bnbAmount) },
+        });
+        successToast(data);
+      }
     } catch (err) {
       console.error(err);
       toast.error(err.reason.toUpperCase(), {
@@ -169,6 +183,7 @@ function Presale({ presaleData }) {
   });
   useEffect(() => {
     switchNetworkToBNB();
+    setReferralUrl(window.location.search.split("=")[1]);
   }, [address]);
 
   const ReferralComponent = () => {

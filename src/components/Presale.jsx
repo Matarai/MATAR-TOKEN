@@ -81,11 +81,11 @@ function Presale({ presaleData }) {
     }
     try {
       if (referralUrl) {
-        console.log("contract", referralContract);
-        const tokenWithReferralData = await buyTokensWithReferral(referralUrl, {
-          overrides: { value: ethers.utils.parseEther(bnbAmount) },
-        });
-        successToast(tokenWithReferralData);
+        console.log(referralUrl, referralContract);
+        // const tokenWithReferralData = await buyTokensWithReferral(referralUrl, {
+        //   overrides: { value: ethers.utils.parseEther(bnbAmount) },
+        // });
+        // successToast(tokenWithReferralData);
       } else {
         console.log("contract", contract);
         const data = await buyTokens({
@@ -237,8 +237,7 @@ function Presale({ presaleData }) {
       >
         {currentLanguage !== "english" && (
           <>
-            بيع اولي مطر
-            <br />
+            البيع الأولي لـ مطر <br />
           </>
         )}
         {currentLanguage === "english" && (
@@ -287,8 +286,9 @@ function Presale({ presaleData }) {
           marginTop: "10px",
         }}
       >
-        {currentLanguage === "english" ? "MATAR Raised:" : "مطر تم جمعها:"}{" "}
-        {data?.matar?.price} MATAR /{data.matar.maxPrice} MATAR
+        {currentLanguage === "english" ? "MATAR Raised:" : "تم جمع:"}{" "}
+        {data?.matar?.price} {currentLanguage === "english" ? "MATAR" : "مطر"} /
+        {data.matar.maxPrice} {currentLanguage === "english" ? "MATAR" : "مطر"}
       </p>
 
       <Divider />
@@ -313,7 +313,7 @@ function Presale({ presaleData }) {
                 <Form.Label>
                   {currentLanguage === "english"
                     ? "Amount in BNB (BEP20)"
-                    : "(BEP20) bnb الكمية من"}
+                    : "(BEP20) BNB الكمية من"}
                 </Form.Label>
                 <div
                   className="d-flex justify-content-center align-items-center rounded pe-2 py-2"
@@ -367,11 +367,17 @@ function Presale({ presaleData }) {
             <div onClick={call}>
               <ButtonFilled
                 name={
-                  isLoading
+                  isLoading || isLoadingReferral
                     ? "Loading..."
-                    : !isMismatched
+                    : !isMismatched && currentLanguage === "english"
                     ? "Buy MATAR"
-                    : "Wrong Network"
+                    : !isMismatched && currentLanguage !== "english"
+                    ? "شراء مطر"
+                    : isMismatched && currentLanguage === "english"
+                    ? "Wrong network"
+                    : isMismatched && currentLanguage !== "english"
+                    ? "شبكة خاطئة"
+                    : "Connect Wallet"
                 }
                 className={`${styles.buttonFilled} position-relative `}
               />

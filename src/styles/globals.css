@@ -24,6 +24,10 @@ body {
   background: #070707;
 }
 
+.rfm-marquee{
+  z-index: 0;
+}
+
 .russo-family {
   font-family: "Russo One";
 }

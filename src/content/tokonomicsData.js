@@ -33,7 +33,7 @@ const tokonomicsData = {
             graphData: [
                 "4.76% Presale",
                 "6% Partnership Funds",
-                "4.76% Burning",
+                "4.76% Secured Fund",
                 "19.48% Exchange & Liquidity",
                 "25% Marketing",
                 "40% AI Blockchain"
@@ -100,7 +100,7 @@ const tokonomicsData = {
             graphData: [
                 "4.76%   البيع المسبق",
                 "6%   أموال الشراكة",
-                "4.76%    الحرق",
+                "4.76%  تأمين المشروع",
                 "19.48%   صرف وسيولة",
                 "25%   تسويق",
                 "40%   تقنية بلوكتشين للذكاء الاصطناعي"

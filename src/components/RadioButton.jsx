@@ -8,12 +8,15 @@ import {
 } from "@thirdweb-dev/react";
 import { toast } from "sonner";
 import { Binance } from "@thirdweb-dev/chains";
+import { useSelector } from "react-redux";
 
 const RadioButton = ({ name, value, standard, icon }) => {
   const address = useAddress();
   const switchChain = useSwitchChain();
   const networkMismatch = useNetworkMismatch();
   const connectionStatus = useConnectionStatus();
+
+  const { currentLanguage } = useSelector((state) => state.login);
 
   const handleSwitchChain = async () => {
     if (networkMismatch) {
@@ -32,7 +35,7 @@ const RadioButton = ({ name, value, standard, icon }) => {
       });
       return;
     }
-    navigator.clipboard.writeText(`https://matar.ai?referral=${address}`);
+    navigator.clipboard.writeText(`https://matar-dapp.netlify.app?referral=${address}`);
     toast.success("Referral link copied!", {
       position: "top-right",
     });
@@ -57,7 +60,11 @@ const RadioButton = ({ name, value, standard, icon }) => {
             <span className={styles.value}>{value}</span>
             {standard && <span className={styles.standard}>{standard}</span>}
           </div> */}
-          <span>Copy your referral link</span>
+          <span className="fw-bold">
+            {currentLanguage === "english"
+              ? "Copy your referral link"
+              : "نسخ رابط الإحالة الخاص بك"}
+          </span>
         </div>
       </div>
     </label>

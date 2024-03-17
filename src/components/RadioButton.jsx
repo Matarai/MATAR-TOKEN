@@ -9,6 +9,8 @@ import {
 import { toast } from "sonner";
 import { Binance } from "@thirdweb-dev/chains";
 import { useSelector } from "react-redux";
+import { FaQuestionCircle } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
 
 const RadioButton = ({ name, value, standard, icon }) => {
   const address = useAddress();
@@ -67,6 +69,12 @@ const RadioButton = ({ name, value, standard, icon }) => {
           </span>
         </div>
       </div>
+      <FaQuestionCircle size={24} className="ms-3 tooltip-referral" />
+      <Tooltip
+        anchorSelect=".tooltip-referral"
+        content={currentLanguage === "english" ? "Refer your friends and earn a 1% reward on every buy!" : "قم بإحالة أصدقائك واحصل على مكافأة بنسبة 1% على كل عملية شراء"}
+        openOnClick={true}
+      />
     </label>
   );
 };

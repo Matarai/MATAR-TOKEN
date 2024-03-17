@@ -35,7 +35,7 @@ const RadioButton = ({ name, value, standard, icon }) => {
       });
       return;
     }
-    navigator.clipboard.writeText(`https://matar-dapp.netlify.app?referral=${address}`);
+    navigator.clipboard.writeText(`https://matar.ai?referral=${address}`);
     toast.success("Referral link copied!", {
       position: "top-right",
     });

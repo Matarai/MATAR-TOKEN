@@ -82,10 +82,10 @@ function Presale({ presaleData }) {
     try {
       if (referralUrl) {
         console.log(referralUrl, referralContract);
-        // const tokenWithReferralData = await buyTokensWithReferral(referralUrl, {
-        //   overrides: { value: ethers.utils.parseEther(bnbAmount) },
-        // });
-        // successToast(tokenWithReferralData);
+        const tokenWithReferralData = await buyTokensWithReferral(referralUrl, {
+          overrides: { value: ethers.utils.parseEther(bnbAmount) },
+        });
+        successToast(tokenWithReferralData);
       } else {
         console.log("contract", contract);
         const data = await buyTokens({

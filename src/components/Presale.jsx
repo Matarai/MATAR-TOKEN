@@ -95,7 +95,7 @@ function Presale({ presaleData }) {
       }
     } catch (err) {
       console.error(err);
-      toast.error(err.reason.toUpperCase(), {
+      toast.error(err?.reason?.toUpperCase(), {
         position: "top-right",
       });
     }

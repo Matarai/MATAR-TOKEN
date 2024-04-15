@@ -18,24 +18,24 @@ function Herioc() {
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   return (
     <div className="mt-md-0 pb-0 pb-md-5 heroWrapper">
-      <Container className="wideContainer mb-md-5 pb-md-5 ms-md-5 ps-md-5">
+      <Container className="wideContainer mb-md-5 pb-md-5">
         <Row className={rltStatus && "flex-row-reverse"}>
           <Col>
             <RainBackground />
             <div
-              className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 mx-auto gap-4 ${
+              className={`hero-content d-flex flex-column text-center align-items-center w-100 mx-auto gap-0 ${
                 rltStatus && "directionRTL"
               }`}
             >
-              <h1 className={`${style.heading} heading px-2 px-md-0`}>
+              <h1 className={`${style.heading} heading px-md-0 text-center`}>
                 {heroData[currentLanguage].heading}
               </h1>
 
-              <p className={`${style.description}`}>
+              <div className={`${style.description} `}>
                 {heroData[currentLanguage].description}
-              </p>
+              </div>
               <div
-                className="d-flex justify-content-center justify-content-md-start w-100 align-items-center gap-5"
+                className="d-flex justify-content-center w-100 align-items-center gap-5"
                 style={{ zIndex: "1" }}
               >
                 <a href="https://nft.matar.ai" target="_black" rel="noreferrer">

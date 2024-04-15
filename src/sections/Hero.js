@@ -18,13 +18,14 @@ function Herioc() {
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   return (
     <div className="mt-md-0 pb-0 pb-md-5 heroWrapper">
-      <Container className="wideContainer">
+      <Container className="wideContainer mb-md-5 pb-md-5 ms-md-5 ps-md-5">
         <Row className={rltStatus && "flex-row-reverse"}>
-          <Col xs={12} md={7}>
+          <Col>
             <RainBackground />
             <div
-              className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 gap-4 ${rltStatus && "directionRTL"
-                }`}
+              className={`hero-content d-flex flex-column justify-content-center align-items-start w-100 mx-auto gap-4 ${
+                rltStatus && "directionRTL"
+              }`}
             >
               <h1 className="heading px-2 px-md-0">
                 {heroData[currentLanguage].heading}
@@ -37,12 +38,18 @@ function Herioc() {
                 className="d-flex justify-content-center justify-content-md-start w-100 align-items-center gap-5"
                 style={{ zIndex: "1" }}
               >
-
                 <a href="https://nft.matar.ai" target="_black" rel="noreferrer">
                   <ButtonFilled name={heroData[currentLanguage].button1} />
                 </a>
                 {/* Scroll to next section */}
-                <div onClick={() => window.scrollTo(0, (isMobile ? (window.innerHeight * 4) : (window.innerHeight * 2)))}>
+                <div
+                  onClick={() =>
+                    window.scrollTo(
+                      0,
+                      isMobile ? window.innerHeight * 4 : window.innerHeight * 2
+                    )
+                  }
+                >
                   <ButtonOutline name={heroData[currentLanguage].button2} />
                 </div>
               </div>
@@ -51,21 +58,21 @@ function Herioc() {
               className="d-none d-lg-flex flex-column"
               style={{ zIndex: "1" }}
             >
-              <TokenSale />
-              <TimerComponent />
+              {/* <TokenSale />
+              <TimerComponent /> */}
             </div>
           </Col>
-          <Col>
+          {/* <Col>
             <div className="rectangle mt-5 py-4" style={{ zIndex: "1" }}>
               <Presale
                 presaleData={heroData[currentLanguage].MatarPresaleCard}
               />
             </div>
-          </Col>
+          </Col> */}
         </Row>
         <div className="d-lg-none d-flex flex-column mt-5 justify-content-center align-items-center w-100">
-          <TokenSale />
-          <TimerComponent />
+          {/* <TokenSale /> */}
+          {/* <TimerComponent /> */}
         </div>
         <ComingSoon show={modalShow} onHide={() => setModalShow(false)} />
       </Container>

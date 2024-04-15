@@ -39,7 +39,7 @@ const dataSet = [
     hoverOffset: 4,
   },
   {
-    label: "Burning",
+    label: "Secured Fund",
     data: 4.76,
     backgroundColor: "rgba(5, 137, 210, 1)",
     hoverOffset: 4,

@@ -60,7 +60,7 @@ const TimerComponent = () => {
         rltStatus && "directionRTL"
       }`}
       style={{
-        background: "#05385e",
+        background: "rgba(18, 183, 242, 0.25)",
         width: "100%",
       }}
     >
@@ -84,22 +84,24 @@ const TimerComponent = () => {
             startDateTime={startTime}
           />
         </Col>
-        <Col className="d-flex flex-column justify-content-center">
-          <p
-            style={{
-              fontSize: "14px",
-            }}
-          >
-            {tokenSale?.TotalRiasedAmount}
-          </p>
+        <Col>
+          <div>
+            <p
+              style={{
+                fontSize: "14px",
+              }}
+            >
+              {tokenSale?.TotalRiasedAmount}
+            </p>
 
-          {/* value range should be from 0 - 100 so calculate it first*/}
-          <LoaderThick
-            value={(BNBPrice / 10 ** 8) * (EthRaised / 10 ** 18)}
-            filled={(totalSold / 10 ** 18 / tokenForAllRound) * 100}
-          />
+            {/* value range should be from 0 - 100 so calculate it first*/}
+            <LoaderThick
+              value={(BNBPrice / 10 ** 8) * (EthRaised / 10 ** 18)}
+              filled={(totalSold / 10 ** 18 / tokenForAllRound) * 100}
+            />
+          </div>
         </Col>
-        <Col className="d-flex align-items-center justify-content-center">
+        <Col className="my-auto pb-2">
           <div
             className="gap-2 timer-buttons position-relative"
             style={{ zIndex: "1" }}

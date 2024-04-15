@@ -118,7 +118,7 @@ const heroData = {
     MatarPresaleCard: {
       totalSupply: "متاح للبيع",
       AvailableForSale: "توتال سبلاي",
-      subTitle: "اشتري الآن قبل أن يرتفع السعر!",
+      subTitle: "اشتري الآن قبل أن يرتفع السعر",
     },
   },
 };

@@ -1,26 +1,82 @@
-import React from 'react'
-import styles from '../styles/RadioButton.module.css'
+import React from "react";
+import styles from "../styles/RadioButton.module.css";
+import {
+  useConnectionStatus,
+  useNetworkMismatch,
+  useSwitchChain,
+  useAddress,
+} from "@thirdweb-dev/react";
+import { toast } from "sonner";
+import { Binance } from "@thirdweb-dev/chains";
+import { useSelector } from "react-redux";
+import { FaQuestionCircle } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
 
 const RadioButton = ({ name, value, standard, icon }) => {
+  const address = useAddress();
+  const switchChain = useSwitchChain();
+  const networkMismatch = useNetworkMismatch();
+  const connectionStatus = useConnectionStatus();
+
+  const { currentLanguage } = useSelector((state) => state.login);
+
+  const handleSwitchChain = async () => {
+    if (networkMismatch) {
+      try {
+        await switchChain(Binance.chainId);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  const handleCopyReferralLink = () => {
+    if (!address) {
+      toast.error("No wallet found", {
+        position: "top-right",
+      });
+      return;
+    }
+    navigator.clipboard.writeText(`https://matar.ai?referral=${address}`);
+    toast.success("Referral link copied!", {
+      position: "top-right",
+    });
+  };
   return (
-    <label className={styles.label} style={{zIndex:"1", position:"relative"}}>
-      <input
-        type="radio"
-        name={name}
-        className='d-none'
-        value={value}
-      />
-      <div className={styles.customRadio}>
-        <div>
-          {icon && <img src={icon} alt="icon" width="150%"/>}
-        </div>
-        <div className='d-flex flex-column'>
-          <span className={styles.value}>{value}</span>
-          {standard && <span className={styles.standard}>{standard}</span>}
+    <label
+      className={styles.label}
+      style={{ zIndex: "1", position: "relative", cursor: "pointer" }}
+      onClick={handleCopyReferralLink}
+    >
+      <input type="button" name={name} className="d-none" value={value} />
+      <div
+        className={
+          connectionStatus === "connected" && !networkMismatch
+            ? styles.active
+            : styles.customRadio
+        }
+      >
+        <div className="d-flex gap-3 align-items-center py-2">
+          {/* <div>{icon && <img src={icon} alt="icon" width="150%" />}</div>
+          <div className="d-flex flex-column">
+            <span className={styles.value}>{value}</span>
+            {standard && <span className={styles.standard}>{standard}</span>}
+          </div> */}
+          <span className="fw-bold">
+            {currentLanguage === "english"
+              ? "Copy your referral link"
+              : "نسخ رابط الإحالة الخاص بك"}
+          </span>
         </div>
       </div>
+      <FaQuestionCircle size={24} className="ms-3 tooltip-referral" />
+      <Tooltip
+        anchorSelect=".tooltip-referral"
+        content={currentLanguage === "english" ? "Refer your friends and earn a 1% reward on every buy!" : "قم بإحالة أصدقائك واحصل على مكافأة بنسبة 1% على كل عملية شراء"}
+        openOnClick={true}
+      />
     </label>
-  )
-}
+  );
+};
 
-export default RadioButton
+export default RadioButton;

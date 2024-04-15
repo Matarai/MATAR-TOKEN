@@ -24,6 +24,14 @@ body {
   background: #070707;
 }
 
+.rfm-marquee{
+  z-index: 0 !important;
+}
+
+.russo-family {
+  font-family: "Russo One";
+}
+
 .header-first {
   color: #fff;
   font-family: "Russo One";
@@ -46,6 +54,14 @@ body {
 
 .mt-40 {
   margin-top: 7rem;
+}
+
+.pt-40 {
+  padding-top: 40px;
+}
+
+.pb-30 {
+  padding-bottom: 30px;
 }
 
 .pt-50 {

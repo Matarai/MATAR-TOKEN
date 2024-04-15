@@ -33,7 +33,7 @@ const tokonomicsData = {
             graphData: [
                 "4.76% Presale",
                 "6% Partnership Funds",
-                "4.76% Burning",
+                "4.76% Secured Fund",
                 "19.48% Exchange & Liquidity",
                 "25% Marketing",
                 "40% AI Blockchain"
@@ -53,7 +53,7 @@ const tokonomicsData = {
                 li1: "1. Token Utility MATAR Token Powers",
                 li2: "MATAR Token Powers Essential Project Services",
                 li3: "2. Fee Structure",
-                li4: "Token Used for Creating Tokens and AI-Generated NFTs",
+                li4: "Token Used for AI Integration in Blockchain Solutions",
                 li5: "Sustainable Ecosystem with Service Fees"
             },
             card3: {
@@ -100,7 +100,7 @@ const tokonomicsData = {
             graphData: [
                 "4.76%   البيع المسبق",
                 "6%   أموال الشراكة",
-                "4.76%    الحرق",
+                "4.76%  تأمين المشروع",
                 "19.48%   صرف وسيولة",
                 "25%   تسويق",
                 "40%   تقنية بلوكتشين للذكاء الاصطناعي"
@@ -119,7 +119,7 @@ const tokonomicsData = {
                 li1: "1- فائدة الرمز المميز",
                 li2: "يعمل رمز MATAR على تشغيل خدمات المشروع الأساسية",
                 li3: "2- هيكل الرسوم",
-                li4: "لرمز المميز المستخدم لإنشاء الرموز المميزة وNFTs المولدة بالذكاء الاصطناعي",
+                li4: "الرمز المميز المستخدم لدمج الذكاء الاصطناعي في حلول البلوكشين",
                 li5: "النظام البيئي المستدام مع رسوم الخدمة"
             },
             card3: {

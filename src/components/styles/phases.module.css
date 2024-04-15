@@ -1,22 +1,22 @@
 .phaseStyle {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   padding: 3px;
   background-color: #808797;
   border-radius: 10px;
   width: 65px;
-  height: 65px;
+  height: 39px;
   opacity: 0.7;
 }
 
 .phaseStyleActive {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   padding: 4px;
   background: linear-gradient(90deg, #5fb7fb 0%, #1d51b0 100%);
@@ -42,13 +42,13 @@
 @media (min-width: 768px) {
   .phaseStyle {
     width: 100px;
-    height: 100px;
+    height: 39px;
     padding: 6px;
   }
 
   .phaseStyleActive {
     width: 120px;
-    height: 120px;
+    height: 59px;
     padding: 8px;
   }
 

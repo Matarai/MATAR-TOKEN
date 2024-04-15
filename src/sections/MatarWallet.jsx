@@ -30,7 +30,7 @@ const MatarWallet = () => {
             </div>
           </Col>
           <Col>
-            <div className="d-flex flex-column justify-content-center h-100">
+            <div className="d-flex flex-column justify-content-center h-100 mt-4 mt-md-0">
               <p className="title">{matarWalletData[currentLanguage].title}</p>
               <h1 className={styles.heading}>
                 {matarWalletData[currentLanguage].heading}

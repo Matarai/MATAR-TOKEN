@@ -206,7 +206,7 @@
     bottom: -2px;
   }
   .timer-buttons {
-    justify-content: start;
+    justify-content: center;
     margin-top: 0;
   }
   .presaleWrapper button {

@@ -13,27 +13,24 @@ import { useSelector } from "react-redux";
 import {
   useContract,
   useContractRead,
-  Web3Button,
   useContractWrite,
   useAddress,
   ConnectWallet,
-  useLogout,
   useNetworkMismatch,
-  ChainId,
-  useNetwork,
+  useSwitchChain,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { toast } from "sonner";
+import { Binance } from "@thirdweb-dev/chains";
 
 function Presale({ presaleData }) {
   const address = useAddress();
-  const { logout } = useLogout();
+  const [referralUrl, setReferralUrl] = React.useState(null);
   const isMismatched = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
+  const switchChain = useSwitchChain();
   const [loaderValue, setLoaderValue] = React.useState(0);
   const [bnbAmount, setBnbAmount] = React.useState("");
   const [matarAmount, setMatarAmount] = React.useState("");
-  const [currentWallet, setCurrentWallet] = React.useState("");
   const { currentLanguage } = useSelector((state) => state.login);
   const totalSupply = 21000000;
   // Read Contract
@@ -43,15 +40,36 @@ function Presale({ presaleData }) {
     "buyTokens"
   );
 
+  // referral contract
+  const { contract: referralContract } = useContract(
+    process.env.REACT_APP_REFERRAL_CONTRACT_ADDRESS
+  );
+
+  const { mutateAsync: buyTokensWithReferral, isLoading: isLoadingReferral } =
+    useContractWrite(referralContract, "buyTokensWithReferral");
+
+  const successToast = (data) => {
+    toast.success("Transaction submitted!", {
+      action: {
+        label: "View",
+        onClick: () => {
+          window.open(`https://bscscan.com/tx/${data.receipt.transactionHash}`);
+        },
+      },
+      duration: 5000,
+      position: "top-right",
+    });
+  };
+
   const call = async () => {
-    console.log(isMismatched);
     if (isMismatched) {
-      toast.error("Wrong Network", {
-        position: "top-right",
-      });
       if (isMismatched) {
         // Prompt their wallet to switch networks
-        switchNetwork(Number(process.env.REACT_APP_ACTIVE_CHAIN_ID));
+        try {
+          await switchChain(Binance.chainId);
+        } catch (error) {
+          console.error(error);
+        }
       }
       return;
     }
@@ -62,24 +80,23 @@ function Presale({ presaleData }) {
       return;
     }
     try {
-      const data = await buyTokens({
-        overrides: { value: ethers.utils.parseEther(bnbAmount) },
-      });
-      toast.success("Transaction submitted!", {
-        action: {
-          label: "View",
-          onClick: () => {
-            window.open(
-              `https://bscscan.com/tx/${data.receipt.transactionHash}`
-            );
-          },
-        },
-        duration: 5000,
-        position: "top-right",
-      });
+      if (referralUrl) {
+        console.log(referralUrl, referralContract);
+        const tokenWithReferralData = await buyTokensWithReferral({
+          args: [referralUrl],
+          overrides: { value: ethers.utils.parseEther(bnbAmount) },
+        });
+        successToast(tokenWithReferralData);
+      } else {
+        console.log("contract", contract);
+        const data = await buyTokens({
+          overrides: { value: ethers.utils.parseEther(bnbAmount) },
+        });
+        successToast(data);
+      }
     } catch (err) {
       console.error(err);
-      toast.error(err.reason.toUpperCase(), {
+      toast.error(err?.reason?.toUpperCase(), {
         position: "top-right",
       });
     }
@@ -145,6 +162,19 @@ function Presale({ presaleData }) {
     setBnbAmount(Number(calculatedMatarAmount).toFixed(2));
   };
 
+  const switchNetworkToBNB = async () => {
+    try {
+      if (isMismatched) {
+        await switchChain(Binance.chainId);
+        toast.success("Switched to Binance Smart Chain", {
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       let val = (data.matar.price / data.matar.maxPrice) * 100;
@@ -153,15 +183,49 @@ function Presale({ presaleData }) {
     return () => clearInterval(interval);
   });
   useEffect(() => {
-    // Check if the user is connected to the wrong network
-    if (isMismatched) {
-      // Prompt their wallet to switch networks
-      toast.error("Wrong Network", {
+    switchNetworkToBNB();
+    setReferralUrl(window.location.search.split("=")[1]);
+  }, [address]);
+
+  const ReferralComponent = () => {
+    const handleCopyReferralLink = () => {
+      navigator.clipboard.writeText(`https://matar.ai?referral=${address}`);
+      toast.success("Referral link copied!", {
         position: "top-right",
       });
-      switchNetwork(Number(process.env.REACT_APP_ACTIVE_CHAIN_ID)); // the chain you want here
-    }
-  }, [address]);
+    };
+    return (
+      <Container>
+        <Row
+          style={{
+            marginTop: "40px",
+            marginBottom: "30px",
+            border: "2px solid #FFF",
+            borderRadius: "5px",
+          }}
+        >
+          <Col
+            className="my-auto overflow-hidden"
+            style={{
+              whiteSpace: "nowrap",
+            }}
+          >{`https://matar.ai?referral=${
+            address && address.slice(0, 4)
+          }...`}</Col>
+          <Col className="p-0 text-end" sm={12} md={4}>
+            <input
+              type="button"
+              className={`${styles.buttonFilled} w-100 cursor-pointer`}
+              value="Copy"
+              disabled={!address}
+              onClick={handleCopyReferralLink}
+            />
+          </Col>
+        </Row>
+      </Container>
+    );
+  };
+
   return (
     <Container className="presaleWrapper px-5">
       <p
@@ -174,8 +238,7 @@ function Presale({ presaleData }) {
       >
         {currentLanguage !== "english" && (
           <>
-            بيع اولي مطر
-            <br />
+            البيع الأولي لـ مطر <br />
           </>
         )}
         {currentLanguage === "english" && (
@@ -198,7 +261,9 @@ function Presale({ presaleData }) {
             borderRight: "1px solid #ffffff40",
           }}
         >
-          <p className="presale-matar-qty-title">{presaleData.AvailableForSale}</p>
+          <p className="presale-matar-qty-title">
+            {presaleData.AvailableForSale}
+          </p>
           <p className="fw-bold m-0">21.000.000</p>
         </div>
         <div className="text-center w-100">
@@ -206,7 +271,9 @@ function Presale({ presaleData }) {
           <p className="fw-bold m-0">{data.availableForSale}</p>
         </div>
       </div>
-      <p className="mt-4 text-center presale-matar-qty-title">{presaleData.subTitle}</p>
+      <p className="mt-4 text-center presale-matar-qty-title">
+        {presaleData.subTitle}
+      </p>
       {/* value range should be from 0 - 100 so calculate it first*/}
       <LoaderThin
         priceTillNextRound={data?.matar?.priceTillNextRound}
@@ -220,14 +287,17 @@ function Presale({ presaleData }) {
           marginTop: "10px",
         }}
       >
-        {currentLanguage === "english" ? "MATAR Raised:" : "مطر تم جمعها:"}{" "}
-        {data?.matar?.price} MATAR /{data.matar.maxPrice} MATAR
+        {currentLanguage === "english" ? "MATAR Raised:" : "تم جمع:"}{" "}
+        {data?.matar?.price} {currentLanguage === "english" ? "MATAR" : "مطر"} /
+        {data.matar.maxPrice} {currentLanguage === "english" ? "MATAR" : "مطر"}
       </p>
 
       <Divider />
 
       <div className="">
         <RadioButton
+          isLoading={isLoading}
+          switchNetwork={call}
           name={"network"}
           value={"BNB"}
           standard={"BEP-20"}
@@ -243,8 +313,8 @@ function Presale({ presaleData }) {
               <Form.Group controlId="formFile" className="">
                 <Form.Label>
                   {currentLanguage === "english"
-                    ? "Amount in BNB"
-                    : "bnb الكمية من"}
+                    ? "Amount in BNB (BEP20)"
+                    : "(BEP20) BNB الكمية من"}
                 </Form.Label>
                 <div
                   className="d-flex justify-content-center align-items-center rounded pe-2 py-2"
@@ -298,11 +368,17 @@ function Presale({ presaleData }) {
             <div onClick={call}>
               <ButtonFilled
                 name={
-                  isLoading
+                  isLoading || isLoadingReferral
                     ? "Loading..."
-                    : !isMismatched
+                    : !isMismatched && currentLanguage === "english"
                     ? "Buy MATAR"
-                    : "Wrong Network"
+                    : !isMismatched && currentLanguage !== "english"
+                    ? "شراء مطر"
+                    : isMismatched && currentLanguage === "english"
+                    ? "Wrong network"
+                    : isMismatched && currentLanguage !== "english"
+                    ? "شبكة خاطئة"
+                    : "Connect Wallet"
                 }
                 className={`${styles.buttonFilled} position-relative `}
               />
@@ -318,19 +394,26 @@ function Presale({ presaleData }) {
               }}
               className={`${styles.buttonFilled} position-relative text-light`}
             />
+            {/* <ReferralComponent /> */}
           </>
         ) : (
-          <ConnectWallet
-            name={address ? "Connect Wallet" : "ربط المحفظة"}
-            modalSize="compact"
-            theme={"dark"}
-            style={{
-              background: "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
-              color: "#ffffff !important",
-              fontFamily: "Russo One",
-            }}
-            className={`${styles.buttonFilled} position-relative text-light`}
-          />
+          <div>
+            <div>
+              <ConnectWallet
+                name={address ? "Connect Wallet" : "ربط المحفظة"}
+                modalSize="compact"
+                theme={"dark"}
+                style={{
+                  background:
+                    "linear-gradient(180deg, #5fb7fb 0%, #1d51b0 100%)",
+                  color: "#ffffff !important",
+                  fontFamily: "Russo One",
+                }}
+                className={`${styles.buttonFilled} position-relative text-light`}
+              />
+            </div>
+            {/* <ReferralComponent /> */}
+          </div>
         )}
       </div>
     </Container>

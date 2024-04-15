@@ -1,7 +1,7 @@
-import createToken from "../assets/services/createToken.svg";
-import Swap from "../assets/services/Swap.svg";
-import NftAi from "../assets/services/NFTAI.svg";
-import NFTMarketPlace from "../assets/services/NFTMarketPlace.svg";
+import createToken from "../assets/services/NFTMATAR.png";
+import Swap from "../assets/services/Swap.png";
+import NftAi from "../assets/services/Visa.png";
+import NFTMarketPlace from "../assets/services/Blockchain.png";
 
 const ourServicesData = {
   english: {
@@ -10,30 +10,30 @@ const ourServicesData = {
     cards: [
       {
         id: "01",
-        title: "Swap",
-        description: "Securely trade cryptocurrencies and tokens with ease.",
-        image: Swap,
+        title: "NFT Holder Rewards Program",
+        description: "Unlocking value for MATAR NFT holders by offering exclusive rewards every three months, incentivizing long-term engagement and loyalty within the MATAR ecosystem.",
+        image: createToken,
         linkTo: "/swap",
         active: true,
       },
       {
         id: "02",
-        title: "Create Token",
+        title: "Swap",
         description:
-          "Generate blockchain tokens swiftly for decentralised ventures.",
-        image: createToken,
+          "Easily exchange digital assets through our swap service, facilitating quick and secure transactions within the MATAR ecosystem.",
+        image: Swap,
         linkTo: "/create-token",
       },
       {
         id: "03",
-        title: "NFT Ai",
-        description: "Transform digital content into blockchain-backed NFTs.",
+        title: "Visa Card Integration",
+        description: "Experience seamless swapping, buying, and selling of digital assets with the MATAR Wallet, integrated with Visa card for convenient transactions.",
         image: NftAi,
         linkTo: "/nft-ai",
       },
       {
         id: "04",
-        title: "NFT Marketplace",
+        title: "AI Integration in Blockchain Solutions",
         description:
           "Showcase and sell NFTs globally in our integrated marketplace.",
         image: NFTMarketPlace,
@@ -46,31 +46,31 @@ const ourServicesData = {
     heading: "خدماتنا",
     cards: [
       {
-        id: "٠٢",
-        title: "سواب",
-        description: "تداول العملات المشفرة والرموز بشكل آمن و سهولة.",
-        image: Swap,
+        id: "٠١",
+        title: "برنامج مكافآت لحاملي NFT",
+        description:"فتح قيمة لحاملي NFT لـ MATAR عن طريق تقديم مكافآت حصرية كل ثلاثة أشهر، مما يحفز على المشاركة طويلة الأجل والولاء داخل نظام MATAR",
+        image: createToken,
         linkTo: "/swap",
         active: true,
       },
       {
-        id: "٠١",
-        title: "إنشاء التوكن",
-        description: "قم بإنشاء توكن الخاص بك بسرعة للمشاريع اللامركزية.",
-        image: createToken,
+        id: "٠٢",
+        title: "سواب",
+        description: "تبادل الأصول الرقمية بسهولة من خلال خدمة التبادل الخاصة بنا، لتيسير المعاملات السريعة والآمنة ضمن نظام.",
+        image: Swap,
         linkTo: "/create-token",
       },
       {
         id: "٠٣",
-        title: "NFT Ai",
-        description: "تحويل المحتوى الرقمي إلى NFTs المدعومة بتقنية البلوكشين.",
+        title: "محفظة MATAR مع تكامل بطاقة فيزا",
+        description: "تجربة تبادل سلس وشراء وبيع الأصول الرقمية مع محفظة MATAR، متكاملة مع بطاقة فيزا لإتاحة المعاملات المريحة",
         image: NftAi,
         linkTo: "/nft-ai",
       },
       {
         id: "٠٤",
-        title: "سوق NFT",
-        description: "اعرض وبيع NFTs عالميًا في سوقنا المتكامل.",
+        title: "دمج الذكاء الاصطناعي في حلول البلوكشين",
+        description: " استغلال التقنيات الحديثة للذكاء الاصطناعي لتحسين وظائف البلوكشين، مما يعزز الكفاءة والأمان والقدرة على التوسع في تطبيقات مختلفة داخل مشروع MATAR.",
         image: NFTMarketPlace,
         linkTo: "/nft-marketplace",
       },

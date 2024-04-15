@@ -13,11 +13,11 @@ const ServiceCard = ({ id, title, description, image, link, active = false }) =>
       <div className={style.img}>
         <img src={image} alt={title} className='w-100' />
       </div>
-      <div className={style.link}>
+      {/* <div className={style.link}>
         <Link to={link} target='_blank'>
           <img src={active? linkTo : linkTo2} alt="Link" className='w-100' />
         </Link>
-      </div>
+      </div> */}
     </div>
   )
 }

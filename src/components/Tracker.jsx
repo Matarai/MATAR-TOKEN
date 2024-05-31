@@ -9,10 +9,12 @@ import { useSelector } from "react-redux";
 const Tracker = () => {
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const heading = currentLanguage === "english" ? "Tracker" : "تعقب";
+  const matatrHeading =
+    currentLanguage === "english" ? "MATAR Token" : "مطر NFT";
   return (
     <Container className="mb-5" fluid>
       <div style={{ marginBottom: "40px" }}>
-        <p className="title text-center">MATAR Token</p>
+        <p className="title text-center">{matatrHeading}</p>
         <h1 className={`${styles.heading} text-center`}>{heading}</h1>
       </div>
       <Row

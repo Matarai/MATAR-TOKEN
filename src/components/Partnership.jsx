@@ -7,10 +7,12 @@ import { useSelector } from "react-redux";
 const Partnership = () => {
   const { currentLanguage, rltStatus } = useSelector((state) => state.login);
   const heading = currentLanguage === "english" ? "Partnership" : "شراكات";
+  const matatrHeading =
+    currentLanguage === "english" ? "MATAR Token" : "مطر NFT";
   return (
     <Container className="my-5" fluid>
       <div>
-        <p className="title text-center">MATAR Token</p>
+        <p className="title text-center">{matatrHeading}</p>
         <h1 className={`${styles.heading} text-center mb-5`}>{heading}</h1>
       </div>
       <Row

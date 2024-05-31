@@ -4,7 +4,7 @@ const heroData = {
     description:
       "MATAR combines blockchain and AI, offering innovative solutions for a smarter, decentralised future.",
     button1: "MATAR NFT",
-    button2: "OUR SERVICES",
+    button2: "TRADE NOW",
 
     cards: {
       title: "token sale Phases",
@@ -65,7 +65,7 @@ const heroData = {
     description:
       "يجمع مطر بين تقنية البلوكشين والذكاء الاصطناعي، ويقدم حلولًا مبتكرة لمستقبل أكثر ذكاءً ولامركزيًا. ",
     button1: " مطر NFT ",
-    button2: "خدماتنا",
+    button2: "تداول الان",
 
     cards: {
       title: "مراحل بيع توكن مطر",

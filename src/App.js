@@ -10,6 +10,8 @@ import MatarWallet from "./sections/MatarWallet";
 import Documents from "./sections/Documents";
 import Tokenomics from "./sections/Tokenomics";
 import { Timeline } from "./sections/Timeline";
+import Tracker from "./components/Tracker";
+import Partnership from "./components/Partnership";
 // import { PriceDividor } from "./components/PriceDividor";
 
 export default function Home() {
@@ -24,7 +26,9 @@ export default function Home() {
       <MatarWallet />
       <Documents />
       <Tokenomics />
+      <Tracker />
       <Timeline />
+      <Partnership />
       <FAQs />
       <Footer />
     </main>

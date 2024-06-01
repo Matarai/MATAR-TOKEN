@@ -1,0 +1,11 @@
+.heading {
+  font-family: "Russo One";
+  font-size: 40px;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .box {
+    border-right: 1px solid #fff; /* Add your desired border styles */
+  }
+}
